@@ -13,8 +13,12 @@ const breakEndTime = document.getElementById("breakEndTime");
 const pauseStartTime = document.getElementById("pauseStartTime");
 const pauseEndTime = document.getElementById("pauseEndTime");
 const breakDays = document.getElementById("breakDays");
-const defaultSitesList = document.getElementById("defaultSitesList");
 const statusIndicator = document.getElementById("statusIndicator");
+const siteToggle = document.getElementById("siteToggle");
+const currentSiteName = document.getElementById("currentSiteName");
+const siteSettings = document.getElementById("siteSettings");
+const generalSettings = document.getElementById("generalSettings");
+const settingsNav = document.getElementById("settingsNav");
 
 const DAYS = [
   { id: 1, label: "Mon" },
@@ -26,14 +30,17 @@ const DAYS = [
   { id: 0, label: "Sun" },
 ];
 
+// Current site being configured
+let currentSite = "facebook.com";
+
 // Initialize the popup
 document.addEventListener("DOMContentLoaded", initPopup);
 
 async function initPopup() {
   await loadSettings();
   await loadBlockedSites();
-  await loadDefaultSites();
   setupEventListeners();
+  setupNavigation();
   updateStatusIndicator();
 }
 
@@ -52,6 +59,107 @@ function setupEventListeners() {
   breakEndTime.addEventListener("change", updateBreakTime);
   pauseStartTime.addEventListener("change", updatePauseTime);
   pauseEndTime.addEventListener("change", updatePauseTime);
+
+  // Site toggle
+  siteToggle.addEventListener("change", toggleCurrentSite);
+
+  // Site-specific options
+  document.querySelectorAll(".site-option").forEach((option) => {
+    option.addEventListener("change", updateSiteOptions);
+  });
+}
+
+function setupNavigation() {
+  // Set up navigation items
+  document.querySelectorAll(".nav-item:not(.settings-nav)").forEach((item) => {
+    item.addEventListener("click", () => {
+      // Update active state
+      document.querySelectorAll(".nav-item").forEach((nav) => {
+        nav.classList.remove("active");
+      });
+      item.classList.add("active");
+
+      // Show site settings
+      siteSettings.style.display = "block";
+      generalSettings.style.display = "none";
+
+      // Update current site
+      currentSite = item.getAttribute("data-site");
+      currentSiteName.textContent = getSiteDisplayName(currentSite);
+
+      // Load site-specific settings
+      loadSiteSettings(currentSite);
+    });
+  });
+
+  // Settings navigation
+  settingsNav.addEventListener("click", () => {
+    // Update active state
+    document.querySelectorAll(".nav-item").forEach((nav) => {
+      nav.classList.remove("active");
+    });
+    settingsNav.classList.add("active");
+
+    // Show general settings
+    siteSettings.style.display = "none";
+    generalSettings.style.display = "block";
+  });
+}
+
+function getSiteDisplayName(site) {
+  const names = {
+    "facebook.com": "Facebook",
+    "youtube.com": "YouTube",
+    "twitter.com": "Twitter",
+    "reddit.com": "Reddit",
+    "netflix.com": "Netflix",
+    "linkedin.com": "LinkedIn",
+    "instagram.com": "Instagram",
+    "pinterest.com": "Pinterest",
+  };
+
+  return names[site] || site;
+}
+
+async function loadSiteSettings(site) {
+  const data = await chrome.storage.local.get(["defaultSites", "siteOptions"]);
+  const defaultSites = data.defaultSites || {};
+  const siteOptions = data.siteOptions || {};
+
+  // Update site toggle
+  siteToggle.checked = defaultSites[site] !== false;
+
+  // Update site-specific options
+  const options = siteOptions[site] || {};
+  document.querySelectorAll(".site-option").forEach((option) => {
+    const optionName = option.getAttribute("data-option");
+    option.checked = options[optionName] || false;
+  });
+}
+
+async function toggleCurrentSite() {
+  const enabled = siteToggle.checked;
+  const data = await chrome.storage.local.get(["defaultSites"]);
+  const defaultSites = data.defaultSites || {};
+
+  defaultSites[currentSite] = enabled;
+  await chrome.storage.local.set({ defaultSites });
+}
+
+async function updateSiteOptions() {
+  const data = await chrome.storage.local.get(["siteOptions"]);
+  const siteOptions = data.siteOptions || {};
+
+  // Get current options
+  const options = {};
+  document.querySelectorAll(".site-option").forEach((option) => {
+    const optionName = option.getAttribute("data-option");
+    options[optionName] = option.checked;
+  });
+
+  // Save to storage
+  siteOptions[currentSite] = options;
+  await chrome.storage.local.set({ siteOptions });
 }
 
 async function loadSettings() {
@@ -115,39 +223,6 @@ async function loadBlockedSites() {
   const data = await chrome.storage.local.get(["blockedSites"]);
   siteList.innerHTML = "";
   (data.blockedSites || []).forEach(addSiteToUI);
-}
-
-async function loadDefaultSites() {
-  const data = await chrome.storage.local.get(["defaultSites"]);
-  defaultSitesList.innerHTML = "";
-  const defaultSites = data.defaultSites || {};
-  for (const [site, enabled] of Object.entries(defaultSites)) {
-    addDefaultSiteToUI(site, enabled);
-  }
-}
-
-function addDefaultSiteToUI(site, enabled) {
-  const div = document.createElement("div");
-  div.className = "toggle-item";
-  div.innerHTML = `
-    <span class="toggle-label">${site}</span>
-    <label class="switch">
-      <input type="checkbox" ${enabled ? "checked" : ""}>
-      <span class="slider"></span>
-    </label>
-  `;
-  const checkbox = div.querySelector("input");
-  checkbox.addEventListener("change", () =>
-    toggleDefaultSite(site, checkbox.checked)
-  );
-  defaultSitesList.appendChild(div);
-}
-
-async function toggleDefaultSite(site, enabled) {
-  const data = await chrome.storage.local.get(["defaultSites"]);
-  const defaultSites = data.defaultSites || {};
-  defaultSites[site] = enabled;
-  await chrome.storage.local.set({ defaultSites });
 }
 
 function addCustomSite() {
