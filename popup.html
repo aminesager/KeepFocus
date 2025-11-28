@@ -10,73 +10,229 @@
         <h2>KeepFocus</h2>
       </div>
 
-      <!-- Redirect Settings -->
-      <div class="section">
-        <h3>Redirect Settings</h3>
-        <div class="input-group">
-          <input
-            id="redirectInput"
-            type="text"
-            placeholder="https://example.com"
+      <!-- Navigation Bar -->
+      <div class="nav-bar">
+        <div class="nav-item active" data-site="facebook.com">
+          <img
+            class="nav-icon"
+            src="icons/fb.png"
+            alt="Facebook Logo"
+            height="36px"
+            width="36px"
           />
-          <button id="setRedirectBtn">Set</button>
-        </div>
-        <div id="currentRedirect" class="status-text"></div>
-      </div>
-
-      <!-- Default Websites -->
-      <div class="section">
-        <h3>Default Websites</h3>
-        <div class="toggle-group" id="defaultSitesList"></div>
-      </div>
-
-      <!-- Custom Websites -->
-      <div class="section">
-        <h3>Custom Websites</h3>
-        <div class="input-group">
-          <input id="siteInput" type="text" placeholder="example.com" />
-          <button id="addBtn">Add</button>
-        </div>
-        <ul id="siteList"></ul>
-      </div>
-
-      <!-- Break Time -->
-      <div class="section">
-        <h3>Break Time</h3>
-        <div class="toggle-item">
-          <span class="toggle-label">Enable Break Time</span>
-          <label class="switch">
-            <input type="checkbox" id="breakToggle" />
-            <span class="slider"></span>
-          </label>
+          <span class="nav-label">Facebook</span>
         </div>
 
-        <div id="breakSettings" style="display: none">
-          <div class="time-inputs">
-            <input type="time" id="breakStartTime" value="12:00" />
-            <span>to</span>
-            <input type="time" id="breakEndTime" value="13:00" />
+        <div class="nav-item" data-site="youtube.com">
+          <img
+            class="nav-icon"
+            src="icons/youtube.png"
+            alt="YouTube Logo"
+            height="36px"
+            width="36px"
+          />
+          <span class="nav-label">YouTube</span>
+        </div>
+
+        <div class="nav-item" data-site="twitter.com">
+          <img
+            class="nav-icon"
+            src="icons/twitter.png"
+            alt="Twitter Logo"
+            height="36px"
+            width="36px"
+          />
+          <span class="nav-label">Twitter</span>
+        </div>
+
+        <div class="nav-item" data-site="instagram.com">
+          <img
+            class="nav-icon"
+            src="icons/instagram.png"
+            alt="Instagram Logo"
+            height="36px"
+            width="36px"
+          />
+          <span class="nav-label">Instagram</span>
+        </div>
+
+        <div class="nav-item settings-nav" id="settingsNav">
+          <img
+            class="nav-icon"
+            src="icons/settings.png"
+            alt="Settings Logo"
+            height="36px"
+            width="36px"
+          />
+          <span class="nav-label">Settings</span>
+        </div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        <!-- Site-specific settings -->
+        <div id="siteSettings" class="site-settings">
+          <div class="site-header">
+            <h3 id="currentSiteName">Facebook</h3>
+            <div class="site-toggle">
+              <span class="toggle-label">Block this site</span>
+              <label class="switch">
+                <input type="checkbox" id="siteToggle" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
           </div>
-          <div class="days-selector" id="breakDays"></div>
-        </div>
-      </div>
 
-      <!-- Pause Time -->
-      <div class="section">
-        <h3>Pause Time</h3>
-        <div class="toggle-item">
-          <span class="toggle-label">Enable Pause Time</span>
-          <label class="switch">
-            <input type="checkbox" id="pauseToggle" />
-            <span class="slider"></span>
-          </label>
+          <div class="site-options">
+            <div class="option-item">
+              <span class="option-label">Hide Feed</span>
+              <label class="switch">
+                <input
+                  type="checkbox"
+                  class="site-option"
+                  data-option="hideFeed"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="option-item">
+              <span class="option-label">Hide Likes and Comments</span>
+              <label class="switch">
+                <input
+                  type="checkbox"
+                  class="site-option"
+                  data-option="hideLikes"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="option-item">
+              <span class="option-label">Hide Chat Sidebar</span>
+              <label class="switch">
+                <input
+                  type="checkbox"
+                  class="site-option"
+                  data-option="hideChat"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="option-item">
+              <span class="option-label">Hide Marketplace</span>
+              <label class="switch">
+                <input
+                  type="checkbox"
+                  class="site-option"
+                  data-option="hideMarketplace"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="option-item">
+              <span class="option-label">Hide Stories</span>
+              <label class="switch">
+                <input
+                  type="checkbox"
+                  class="site-option"
+                  data-option="hideStories"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="option-item">
+              <span class="option-label">Hide Video and Reels</span>
+              <label class="switch">
+                <input
+                  type="checkbox"
+                  class="site-option"
+                  data-option="hideVideos"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="option-item">
+              <span class="option-label">Remove Colors</span>
+              <label class="switch">
+                <input
+                  type="checkbox"
+                  class="site-option"
+                  data-option="removeColors"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
         </div>
 
-        <div id="pauseSettings" style="display: none">
-          <div class="time-inputs">
-            <input type="time" id="pauseStartTime" value="18:00" />
-            <span>to</span>
-            <input type="time" id="pauseEndTime" value="08:00" />
+        <!-- General Settings -->
+        <div
+          id="generalSettings"
+          class="general-settings"
+          style="display: none"
+        >
+          <!-- Redirect Settings -->
+          <div class="section">
+            <h3>Redirect Settings</h3>
+            <div class="input-group">
+              <input
+                id="redirectInput"
+                type="text"
+                placeholder="https://example.com"
+              />
+              <button id="setRedirectBtn">Set</button>
+            </div>
+            <div id="currentRedirect" class="status-text"></div>
+          </div>
+
+          <!-- Custom Websites -->
+          <div class="section">
+            <h3>Custom Websites</h3>
+            <div class="input-group">
+              <input id="siteInput" type="text" placeholder="example.com" />
+              <button id="addBtn">Add</button>
+            </div>
+            <ul id="siteList"></ul>
+          </div>
+
+          <!-- Break Time -->
+          <div class="section">
+            <h3>Break Time</h3>
+            <div class="toggle-item">
+              <span class="toggle-label">Enable Break Time</span>
+              <label class="switch">
+                <input type="checkbox" id="breakToggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div id="breakSettings" style="display: none">
+              <div class="time-inputs">
+                <input type="time" id="breakStartTime" value="12:00" />
+                <span>to</span>
+                <input type="time" id="breakEndTime" value="13:00" />
+              </div>
+              <div class="days-selector" id="breakDays"></div>
+            </div>
+          </div>
+
+          <!-- Pause Time -->
+          <div class="section">
+            <h3>Pause Time</h3>
+            <div class="toggle-item">
+              <span class="toggle-label">Enable Pause Time</span>
+              <label class="switch">
+                <input type="checkbox" id="pauseToggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div id="pauseSettings" style="display: none">
+              <div class="time-inputs">
+                <input type="time" id="pauseStartTime" value="18:00" />
+                <span>to</span>
+                <input type="time" id="pauseEndTime" value="08:00" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
