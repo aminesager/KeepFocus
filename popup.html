@@ -1,17 +1,87 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <link rel="stylesheet" href="popup.css">
-</head>
-<body>
-  <h2>Website Blocker</h2>
+  <head>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
 
-  <input id="siteInput" type="text" placeholder="example.com">
-  <button id="addBtn">Add</button>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2>KeepFocus</h2>
+      </div>
 
-  <h3>Blocked Sites</h3>
-  <ul id="siteList"></ul>
+      <!-- Redirect Settings -->
+      <div class="section">
+        <h3>Redirect Settings</h3>
+        <div class="input-group">
+          <input
+            id="redirectInput"
+            type="text"
+            placeholder="https://example.com"
+          />
+          <button id="setRedirectBtn">Set</button>
+        </div>
+        <div id="currentRedirect" class="status-text"></div>
+      </div>
 
-  <script src="popup.js"></script>
-</body>
+      <!-- Default Websites -->
+      <div class="section">
+        <h3>Default Websites</h3>
+        <div class="toggle-group" id="defaultSitesList"></div>
+      </div>
+
+      <!-- Custom Websites -->
+      <div class="section">
+        <h3>Custom Websites</h3>
+        <div class="input-group">
+          <input id="siteInput" type="text" placeholder="example.com" />
+          <button id="addBtn">Add</button>
+        </div>
+        <ul id="siteList"></ul>
+      </div>
+
+      <!-- Break Time -->
+      <div class="section">
+        <h3>Break Time</h3>
+        <div class="toggle-item">
+          <span class="toggle-label">Enable Break Time</span>
+          <label class="switch">
+            <input type="checkbox" id="breakToggle" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div id="breakSettings" style="display: none">
+          <div class="time-inputs">
+            <input type="time" id="breakStartTime" value="12:00" />
+            <span>to</span>
+            <input type="time" id="breakEndTime" value="13:00" />
+          </div>
+          <div class="days-selector" id="breakDays"></div>
+        </div>
+      </div>
+
+      <!-- Pause Time -->
+      <div class="section">
+        <h3>Pause Time</h3>
+        <div class="toggle-item">
+          <span class="toggle-label">Enable Pause Time</span>
+          <label class="switch">
+            <input type="checkbox" id="pauseToggle" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div id="pauseSettings" style="display: none">
+          <div class="time-inputs">
+            <input type="time" id="pauseStartTime" value="18:00" />
+            <span>to</span>
+            <input type="time" id="pauseEndTime" value="08:00" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
 </html>
