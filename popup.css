@@ -143,7 +143,7 @@ h2 {
 }
 
 .nav-item:hover {
-  background: #f3f4f9;
+  background: #9b94ad;
 }
 
 .nav-item.active {
@@ -418,4 +418,46 @@ input:checked + .slider:before {
   border: 1px solid #e5e7ee;
   margin-bottom: 16px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.content-area {
+  padding: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg); /* Firefox */
+}
+
+/* Webkit-based Browsers */
+.content-area::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.content-area::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+  border-radius: 10px;
+}
+
+.content-area::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.content-area::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
+:root {
+  --scrollbar-bg: #f5f6fa;
+  --scrollbar-thumb: #6366f1;
+  --scrollbar-thumb-hover: #4f54e6;
+}
+
+/* Dark Mode Overrides */
+body.dark-mode {
+  --scrollbar-bg: #22232b;
+  --scrollbar-thumb: #7c82ff;
+  --scrollbar-thumb-hover: #6366f1;
 }
