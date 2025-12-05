@@ -13,12 +13,12 @@ const breakEndTime = document.getElementById("breakEndTime");
 const pauseStartTime = document.getElementById("pauseStartTime");
 const pauseEndTime = document.getElementById("pauseEndTime");
 const breakDays = document.getElementById("breakDays");
-const statusIndicator = document.getElementById("statusIndicator");
 const siteToggle = document.getElementById("siteToggle");
 const currentSiteName = document.getElementById("currentSiteName");
 const siteSettings = document.getElementById("siteSettings");
 const generalSettings = document.getElementById("generalSettings");
 const settingsNav = document.getElementById("settingsNav");
+const navItems = document.querySelectorAll(".nav-item:not(.settings-nav)");
 
 const DAYS = [
   { id: 1, label: "Mon" },
@@ -76,13 +76,14 @@ let currentSite = "facebook.com";
 // Initialize the popup
 document.addEventListener("DOMContentLoaded", initPopup);
 
-
 async function initPopup() {
   await loadSettings();
   await loadBlockedSites();
   setupEventListeners();
   setupNavigation();
-  updateStatusIndicator();
+
+  // CRITICAL FIX: Load initial site settings when popup opens
+  loadSiteSettings(currentSite);
 }
 
 function setupEventListeners() {
@@ -327,14 +328,12 @@ async function toggleBreakTime() {
   const enabled = breakToggle.checked;
   await chrome.storage.local.set({ breakEnabled: enabled });
   breakSettings.style.display = enabled ? "block" : "none";
-  updateStatusIndicator();
 }
 
 async function togglePauseTime() {
   const enabled = pauseToggle.checked;
   await chrome.storage.local.set({ pauseEnabled: enabled });
   pauseSettings.style.display = enabled ? "block" : "none";
-  updateStatusIndicator();
 }
 
 async function updateBreakTime() {
@@ -351,83 +350,22 @@ async function updatePauseTime() {
   });
 }
 
-async function checkActualBlockingStatus() {
-  try {
-    const rules = await chrome.declarativeNetRequest.getDynamicRules();
-    const data = await chrome.storage.local.get([
-      "breakEnabled",
-      "pauseEnabled",
-      "blockedSites",
-      "defaultSites",
-      "redirectUrl",
-    ]);
-    const breakActive = await chrome.runtime.sendMessage({
-      action: "isBreakTime",
-    });
-    const pauseActive = await chrome.runtime.sendMessage({
-      action: "isPauseTime",
-    });
-    const hasBlockingRules = rules.length > 0;
-    const redirectUrl = data.redirectUrl?.trim();
-    // Calculate total sites that should be blocked
-    const customSites = Array.isArray(data.blockedSites)
-      ? data.blockedSites
-      : [];
-    const defaultSites = data.defaultSites || {};
-    const enabledDefaultSites = Object.keys(defaultSites).filter(
-      (site) => defaultSites[site]
-    );
-    const totalSites = [...new Set([...customSites, ...enabledDefaultSites])]
-      .length;
-    const statusElement = statusIndicator.querySelector(".status-indicator");
-    const textElement = statusIndicator.querySelector(".status-text");
-    if (pauseActive) {
-      statusElement.className = "status-indicator status-inactive";
-      textElement.textContent = "Paused - No blocking";
-    } else if (breakActive) {
-      statusElement.className = "status-indicator status-inactive";
-      textElement.textContent = "Break Time - No blocking";
-    } else if (hasBlockingRules && totalSites > 0) {
-      statusElement.className = "status-indicator status-active";
-      if (redirectUrl) {
-        textElement.textContent = `Active - Redirecting ${rules.length} sites`;
-      } else {
-        textElement.textContent = `Active - Blocking ${rules.length} sites`;
-      }
-    } else if (totalSites > 0 && !hasBlockingRules) {
-      statusElement.className = "status-indicator status-inactive";
-      textElement.textContent = "Error - Rules not applied";
-    } else {
-      statusElement.className = "status-indicator status-inactive";
-      textElement.textContent = "Inactive - No sites to block";
+// Dark mode handling (if you had this before)
+function setupDarkMode() {
+  // Check if dark mode preference exists in storage
+  chrome.storage.local.get(["darkMode"], (data) => {
+    if (data.darkMode) {
+      document.body.classList.add("dark-mode");
     }
-  } catch (error) {
-    console.error("Error checking status:", error);
-  }
+  });
 }
 
-// Check status every 2 seconds
-setInterval(checkActualBlockingStatus, 2000);
-checkActualBlockingStatus();
-
-async function updateStatusIndicator() {
-  const data = await chrome.storage.local.get(["breakEnabled", "pauseEnabled"]);
-  const breakActive = await chrome.runtime.sendMessage({
-    action: "isBreakTime",
-  });
-  const pauseActive = await chrome.runtime.sendMessage({
-    action: "isPauseTime",
-  });
-  const statusElement = statusIndicator.querySelector(".status-indicator");
-  const textElement = statusIndicator.querySelector(".status-text");
-  if (pauseActive) {
-    statusElement.className = "status-indicator status-inactive";
-    textElement.textContent = "Paused - No blocking";
-  } else if (breakActive) {
-    statusElement.className = "status-indicator status-inactive";
-    textElement.textContent = "Break Time - No blocking";
-  } else {
-    statusElement.className = "status-indicator status-active";
-    textElement.textContent = "Active - Blocking websites";
-  }
+// Add dark mode toggle if needed
+function toggleDarkMode() {
+  const isDarkMode = document.body.classList.contains("dark-mode");
+  document.body.classList.toggle("dark-mode");
+  chrome.storage.local.set({ darkMode: !isDarkMode });
 }
+
+// Call setupDarkMode in initPopup if you want dark mode
+setupDarkMode();
