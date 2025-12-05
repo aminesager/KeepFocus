@@ -1,17 +1,29 @@
 {
   "manifest_version": 3,
   "name": "KeepFocus",
-  "version": "1.1",
-  "description": "Advanced website blocker with scheduling and redirect features",
+  "version": "1.2",
+  "description": "Advanced website blocker with content filtering and scheduling",
 
   "permissions": [
     "storage",
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
-    "alarms"
+    "alarms",
+    "activeTab",
+    "scripting"
   ],
 
-  "host_permissions": ["*://*/*"],
+  "host_permissions": [
+    "*://*/*",
+    "https://facebook.com/*",
+    "https://www.facebook.com/*",
+    "https://youtube.com/*",
+    "https://www.youtube.com/*",
+    "https://instagram.com/*",
+    "https://www.instagram.com/*",
+    "https://twitter.com/*",
+    "https://x.com/*"
+  ],
 
   "background": {
     "service_worker": "background.js"
@@ -20,6 +32,21 @@
   "action": {
     "default_popup": "popup.html"
   },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.facebook.com/*",
+        "*://*.youtube.com/*",
+        "*://*.instagram.com/*",
+        "*://*.twitter.com/*",
+        "*://*.x.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
 
   "icons": {
     "128": "icons/icon128.png"
