@@ -175,7 +175,6 @@ h2 {
   text-overflow: ellipsis;
   width: 100%;
 }
- 
 
 /* Content Area */
 .content-area {
@@ -440,4 +439,7 @@ input:checked + .slider:before {
   margin-bottom: 16px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
- 
+
+.dark-mode .site-text {
+  color: #e2e2e2 !important;
+}
