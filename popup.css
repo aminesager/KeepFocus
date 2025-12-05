@@ -7,6 +7,9 @@ body {
   background: #eef1f6;
   color: #1a1a1a;
 }
+body.dark-mode .dark-btn img {
+  filter: invert(1);
+}
 
 /* Container */
 .container {
@@ -15,21 +18,14 @@ body {
 
 /* Dark Mode Button */ /* Basic button styling */
 .dark-btn {
-  padding: 10px 20px;
   cursor: pointer;
-  font-size: 18px;
-  background-color: #fff;
-  border: none;
-  transition: background-color 0.3s, color 0.3s;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-/* Dark theme button */
-body.dark-mode .dark-btn {
-  background-color: #333;
-  color: #fff;
+  margin-left: auto;
+  background: none;
+  padding: 15px;
+  border: none;
 }
 
 /* For the moon (dark mode) icon */
@@ -37,7 +33,7 @@ body.dark-mode .dark-btn {
   width: 20px;
   height: 20px;
   background-image: url("moon.svg"); /* Replace with your actual path to moon.svg */
-  background-size: cover;
+  background-size: contain;
   background-position: center;
 }
 
@@ -46,7 +42,7 @@ body.dark-mode .dark-btn {
   width: 20px;
   height: 20px;
   background-image: url("sun.svg"); /* Replace with your actual path to sun.svg */
-  background-size: cover;
+  background-size: contain;
   background-position: center;
 }
 
@@ -276,8 +272,12 @@ button {
   transition: background 0.2s, transform 0.1s;
 }
 
+.dark-mode button:hover {
+  background: gray;
+}
+
 button:hover {
-  background: #3c63d6;
+  background: #4b79ff;
 }
 
 button:active {

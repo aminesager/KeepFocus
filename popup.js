@@ -70,6 +70,15 @@ document.getElementById("darkModeToggle").addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
 });
 
+const icon = document.getElementById("darkModeIcon");
+
+// Update the icon whenever theme changes
+document.getElementById("darkModeToggle").addEventListener("click", () => {
+  const isDark = document.body.classList.contains("dark-mode");
+  icon.src = isDark ? "icons/sun.svg" : "icons/moon.svg";
+});
+
+
 // Current site being configured
 let currentSite = "facebook.com";
 
