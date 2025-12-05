@@ -63,7 +63,7 @@ const SITE_OPTIONS_CONFIG = {
   ],
 };
 
-document.body.classList.add("dark-mode");
+ 
 
 // Toggle dark mode when the button is clicked
 document.getElementById("darkModeToggle").addEventListener("click", () => {
@@ -77,7 +77,6 @@ document.getElementById("darkModeToggle").addEventListener("click", () => {
   const isDark = document.body.classList.contains("dark-mode");
   icon.src = isDark ? "icons/sun.svg" : "icons/moon.svg";
 });
-
 
 // Current site being configured
 let currentSite = "facebook.com";
