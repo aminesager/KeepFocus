@@ -39,7 +39,7 @@ async function initializeDefaultSettings() {
       await chrome.storage.local.set({ redirectUrl: "" });
     }
     if (!data.breakDays) {
-      await chrome.storage.local.set({ breakDays: [1, 2, 3, 4, 5] }); 
+      await chrome.storage.local.set({ breakDays: [1, 2, 3, 4, 5] });
     }
     const defaults = {
       breakEnabled: false,
@@ -74,8 +74,32 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
   if (namespace === "local") {
     console.log("Storage changed:", changes);
     updateDNRRules();
+
+    // Notify content scripts about siteOptions changes
+    if (changes.siteOptions) {
+      chrome.tabs.query({}, (tabs) => {
+        tabs.forEach((tab) => {
+          if (tab.url && isSupportedSite(tab.url)) {
+            chrome.tabs.sendMessage(tab.id, {
+              action: "updateContentFiltering",
+            });
+          }
+        });
+      });
+    }
   }
 });
+
+function isSupportedSite(url) {
+  const supportedDomains = [
+    "facebook.com",
+    "youtube.com",
+    "instagram.com",
+    "twitter.com",
+    "x.com",
+  ];
+  return supportedDomains.some((domain) => url.includes(domain));
+}
 
 async function isBreakTime() {
   try {
@@ -207,7 +231,7 @@ async function updateDNRRules() {
           ) {
             finalUrl = "https://" + redirectUrl;
           }
-          new URL(finalUrl); 
+          new URL(finalUrl);
           newRules.push({
             id: ruleId,
             priority: 1,
@@ -282,5 +306,16 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   }
 });
 
+// Message handling for popup
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "isBreakTime") {
+    isBreakTime().then(sendResponse);
+    return true;
+  }
+  if (request.action === "isPauseTime") {
+    isPauseTime().then(sendResponse);
+    return true;
+  }
+});
+
 updateDNRRules();
-  

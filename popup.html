@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+
+<html metacharset="UTF-8">
   <head>
     <link rel="stylesheet" href="popup.css" />
   </head>
@@ -84,83 +85,7 @@
           </div>
 
           <div class="site-options">
-            <div class="option-item">
-              <span class="option-label">Hide Feed</span>
-              <label class="switch">
-                <input
-                  type="checkbox"
-                  class="site-option"
-                  data-option="hideFeed"
-                />
-                <span class="slider"></span>
-              </label>
-            </div>
-            <div class="option-item">
-              <span class="option-label">Hide Likes and Comments</span>
-              <label class="switch">
-                <input
-                  type="checkbox"
-                  class="site-option"
-                  data-option="hideLikes"
-                />
-                <span class="slider"></span>
-              </label>
-            </div>
-            <div class="option-item">
-              <span class="option-label">Hide Chat Sidebar</span>
-              <label class="switch">
-                <input
-                  type="checkbox"
-                  class="site-option"
-                  data-option="hideChat"
-                />
-                <span class="slider"></span>
-              </label>
-            </div>
-            <div class="option-item">
-              <span class="option-label">Hide Marketplace</span>
-              <label class="switch">
-                <input
-                  type="checkbox"
-                  class="site-option"
-                  data-option="hideMarketplace"
-                />
-                <span class="slider"></span>
-              </label>
-            </div>
-            <div class="option-item">
-              <span class="option-label">Hide Stories</span>
-              <label class="switch">
-                <input
-                  type="checkbox"
-                  class="site-option"
-                  data-option="hideStories"
-                />
-                <span class="slider"></span>
-              </label>
-            </div>
-            <div class="option-item">
-              <span class="option-label">Hide Video and Reels</span>
-              <label class="switch">
-                <input
-                  type="checkbox"
-                  class="site-option"
-                  data-option="hideVideos"
-                />
-                <span class="slider"></span>
-              </label>
-            </div>
-            <div class="option-item">
-              <span class="option-label">Remove Colors</span>
-              <label class="switch">
-                <input
-                  type="checkbox"
-                  class="site-option"
-                  data-option="removeColors"
-                />
-                <span class="slider"></span>
-              </label>
-            </div>
+            <!-- Options will be dynamically populated -->
           </div>
         </div>
 
@@ -170,6 +95,15 @@
           class="general-settings"
           style="display: none"
         >
+          <!-- Status Indicator -->
+          <div class="section">
+            <h3>Extension Status</h3>
+            <div id="statusIndicator" class="status-container">
+              <div class="status-indicator status-active"></div>
+              <span class="status-text">Active - Blocking websites</span>
+            </div>
+          </div>
+
           <!-- Redirect Settings -->
           <div class="section">
             <h3>Redirect Settings</h3>

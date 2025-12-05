@@ -30,11 +30,45 @@ const DAYS = [
   { id: 0, label: "Sun" },
 ];
 
+// Site-specific option configurations
+const SITE_OPTIONS_CONFIG = {
+  "facebook.com": [
+    { id: "hideFeed", label: "Hide Feed" },
+    { id: "hideLikes", label: "Hide Likes and Comments" },
+    { id: "hideChat", label: "Hide Chat Bar" },
+    { id: "hideStories", label: "Hide Stories" },
+    { id: "hideReels", label: "Hide Reels" },
+    { id: "removeColors", label: "Remove Colors" },
+  ],
+  "youtube.com": [
+    { id: "hideRecommendations", label: "Hide Recommendations" },
+    { id: "redirectToSubs", label: "Force Redirect to Subscriptions" },
+    { id: "hideNews", label: "Hide News" },
+    { id: "hideSidebar", label: "Hide Sidebar" },
+    { id: "hideComments", label: "Hide Comments" },
+    { id: "hideShorts", label: "Hide Shorts" },
+    { id: "removeColors", label: "Remove Colors" },
+  ],
+  "instagram.com": [
+    { id: "hideFeed", label: "Hide Feed" },
+    { id: "hideLikes", label: "Hide Likes and Comments" },
+    { id: "hideStories", label: "Hide Stories" },
+    { id: "hideReels", label: "Hide Reels" },
+    { id: "removeColors", label: "Remove Colors" },
+  ],
+  "twitter.com": [
+    { id: "blockTimeline", label: "Block Timeline" },
+    { id: "hideAllMedia", label: "Hide All Media" },
+    { id: "removeColors", label: "Remove Colors" },
+  ],
+};
+
 // Current site being configured
 let currentSite = "facebook.com";
 
 // Initialize the popup
 document.addEventListener("DOMContentLoaded", initPopup);
+
 
 async function initPopup() {
   await loadSettings();
@@ -62,11 +96,6 @@ function setupEventListeners() {
 
   // Site toggle
   siteToggle.addEventListener("change", toggleCurrentSite);
-
-  // Site-specific options
-  document.querySelectorAll(".site-option").forEach((option) => {
-    option.addEventListener("change", updateSiteOptions);
-  });
 }
 
 function setupNavigation() {
@@ -111,13 +140,8 @@ function getSiteDisplayName(site) {
     "facebook.com": "Facebook",
     "youtube.com": "YouTube",
     "twitter.com": "Twitter",
-    "reddit.com": "Reddit",
-    "netflix.com": "Netflix",
-    "linkedin.com": "LinkedIn",
     "instagram.com": "Instagram",
-    "pinterest.com": "Pinterest",
   };
-
   return names[site] || site;
 }
 
@@ -129,11 +153,34 @@ async function loadSiteSettings(site) {
   // Update site toggle
   siteToggle.checked = defaultSites[site] !== false;
 
-  // Update site-specific options
-  const options = siteOptions[site] || {};
+  // Update site-specific options UI based on site
+  updateSiteOptionsUI(site, siteOptions[site] || {});
+}
+
+function updateSiteOptionsUI(site, options) {
+  const siteOptionsContainer = document.querySelector(".site-options");
+  const config = SITE_OPTIONS_CONFIG[site] || [];
+
+  siteOptionsContainer.innerHTML = "";
+
+  config.forEach((optionConfig) => {
+    const div = document.createElement("div");
+    div.className = "option-item";
+    div.innerHTML = `
+      <span class="option-label">${optionConfig.label}</span>
+      <label class="switch">
+        <input type="checkbox" class="site-option" data-option="${
+          optionConfig.id
+        }" ${options[optionConfig.id] ? "checked" : ""}>
+        <span class="slider"></span>
+      </label>
+    `;
+    siteOptionsContainer.appendChild(div);
+  });
+
+  // Re-attach event listeners
   document.querySelectorAll(".site-option").forEach((option) => {
-    const optionName = option.getAttribute("data-option");
-    option.checked = options[optionName] || false;
+    option.addEventListener("change", updateSiteOptions);
   });
 }
 
