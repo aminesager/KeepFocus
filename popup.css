@@ -13,6 +13,105 @@ body {
   padding: 0;
 }
 
+/* Dark Mode Button */ /* Basic button styling */
+.dark-btn {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 18px;
+  background-color: #fff;
+  border: none;
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Dark theme button */
+body.dark-mode .dark-btn {
+  background-color: #333;
+  color: #fff;
+}
+
+/* For the moon (dark mode) icon */
+.moon-icon {
+  width: 20px;
+  height: 20px;
+  background-image: url("moon.svg"); /* Replace with your actual path to moon.svg */
+  background-size: cover;
+  background-position: center;
+}
+
+/* For the sun (light mode) icon */
+.sun-icon {
+  width: 20px;
+  height: 20px;
+  background-image: url("sun.svg"); /* Replace with your actual path to sun.svg */
+  background-size: cover;
+  background-position: center;
+}
+
+/* Icon color change on dark mode */
+body.dark-mode .moon-icon {
+  background-image: url("sun.svg"); /* Replace with your actual path to sun.svg */
+}
+
+body:not(.dark-mode) .sun-icon {
+  background-image: url("moon.svg"); /* Replace with your actual path to moon.svg */
+}
+
+/* Dark Mode Theme */
+.dark-mode {
+  background: #1e1f25 !important;
+  color: #e2e2e2 !important;
+}
+
+.dark-mode .header {
+  background: #2a2c34 !important;
+}
+
+.dark-mode .nav-bar {
+  background: #2b2d35 !important;
+  border-color: #3a3c45 !important;
+}
+
+.dark-mode .nav-item {
+  color: #d9d9d9 !important;
+}
+
+.dark-mode .nav-item.active {
+  background: #4b79ff !important;
+}
+
+.dark-mode .section,
+.dark-mode .site-options,
+.dark-mode li {
+  background: #2b2d35 !important;
+  border-color: #3a3c45 !important;
+}
+
+.dark-mode input {
+  background: #2d2f37 !important;
+  color: white !important;
+  border-color: #3a3c45 !important;
+}
+
+/* Dark Mode Text Fixes */
+
+/* Navigation Menu - Social Media Titles */
+.dark-mode .nav-label {
+  color: #d9d9d9 !important;
+}
+
+/* Section Headers */
+.dark-mode h3 {
+  color: #e2e2e2 !important;
+}
+
+/* Input Text Placeholder */
+.dark-mode input::placeholder {
+  color: #b3b3b3 !important;
+}
+
 /* Header */
 .header {
   background: linear-gradient(135deg, #4b79ff, #6a9bff);
@@ -21,8 +120,9 @@ body {
   margin: 0;
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
 }
-
 h2 {
   margin: 0;
   font-size: 18px;
@@ -75,10 +175,7 @@ h2 {
   text-overflow: ellipsis;
   width: 100%;
 }
-
-.settings-nav {
-  background: #f8f9fa;
-}
+ 
 
 /* Content Area */
 .content-area {
@@ -343,29 +440,4 @@ input:checked + .slider:before {
   margin-bottom: 16px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
-
-/* Status */
-.status-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.status-indicator {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.status-active {
-  background: #33c759;
-}
-
-.status-inactive {
-  background: #ff453a;
-}
-
-.status-text {
-  font-size: 12px;
-  color: #6a6f77;
-}
+ 
