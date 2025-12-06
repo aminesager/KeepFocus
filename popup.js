@@ -90,7 +90,7 @@ async function initPopup() {
   setupEventListeners();
   setupNavigation();
 
-  // CRITICAL FIX: Load initial site settings when popup opens
+  // CRITICAL FIX: Load saved nav state
   loadSiteSettings(currentSite);
 }
 
@@ -115,6 +115,11 @@ function setupEventListeners() {
 }
 
 function setupNavigation() {
+  // Load saved navigation state
+  const data = await chrome.storage.local.get(["selectedNav", "lastSite"]);
+  const savedNav = data.selectedNav || "facebook.com";
+  const savedSite = data.lastSite || "facebook.com";
+
   // Set up navigation items
   document.querySelectorAll(".nav-item:not(.settings-nav)").forEach((item) => {
     item.addEventListener("click", () => {
@@ -130,11 +135,30 @@ function setupNavigation() {
 
       // Update current site
       currentSite = item.getAttribute("data-site");
-      currentSiteName.textContent = getSiteDisplayName(currentSite);
+      updateCurrentSiteDisplay();
+
+      // Save navigation state
+      await chrome.storage.local.set({
+        selectedNav: currentSite,
+        lastSite: currentSite,
+      });
 
       // Load site-specific settings
       loadSiteSettings(currentSite);
     });
+
+    // Restore saved active state
+    if (item.getAttribute("data-site") === savedNav) {
+      item.classList.add("active");
+      currentSite = savedSite;
+      updateCurrentSiteDisplay();
+
+      // Show site settings if not settings nav
+      if (savedNav !== "settings") {
+        siteSettings.style.display = "block";
+        generalSettings.style.display = "none";
+      }
+    }
   });
 
   // Settings navigation
@@ -148,7 +172,17 @@ function setupNavigation() {
     // Show general settings
     siteSettings.style.display = "none";
     generalSettings.style.display = "block";
+
+    // Save navigation state
+    await chrome.storage.local.set({ selectedNav: "settings" });
   });
+
+  // Restore settings nav if it was selected
+  if (savedNav === "settings") {
+    settingsNav.classList.add("active");
+    siteSettings.style.display = "none";
+    generalSettings.style.display = "block";
+  }
 }
 
 function getSiteDisplayName(site) {
@@ -369,11 +403,35 @@ function setupDarkMode() {
 }
 
 // Add dark mode toggle if needed
-function toggleDarkMode() {
+async function toggleDarkMode() {
   const isDarkMode = document.body.classList.contains("dark-mode");
   document.body.classList.toggle("dark-mode");
-  chrome.storage.local.set({ darkMode: !isDarkMode });
+
+  // Save theme preference
+  await chrome.storage.local.set({
+    darkMode: !isDarkMode,
+    theme: !isDarkMode ? "dark" : "light",
+  });
+
+  // Update icon
+  const icon = document.getElementById("darkModeIcon");
+  if (icon) {
+    icon.src = !isDarkMode ? "icons/sun.svg" : "icons/moon.svg";
+  }
 }
 
-// Call setupDarkMode in initPopup if you want dark mode
-setupDarkMode();
+// Toggle dark mode when the button is clicked
+document
+  .getElementById("darkModeToggle")
+  .addEventListener("click", toggleDarkMode);
+
+// Initialize dark mode icon on load
+document.addEventListener("DOMContentLoaded", () => {
+  const icon = document.getElementById("darkModeIcon");
+  if (icon) {
+    chrome.storage.local.get(["darkMode", "theme"], (data) => {
+      const isDarkMode = data.darkMode || data.theme === "dark";
+      icon.src = isDarkMode ? "icons/sun.svg" : "icons/moon.svg";
+    });
+  }
+});
