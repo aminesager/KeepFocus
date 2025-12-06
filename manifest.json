@@ -1,54 +1,79 @@
-  {
-    "manifest_version": 3,
-    "name": "KeepFocus",
-    "version": "1.2",
-    "description": "Advanced website blocker with content filtering and scheduling",
+{
+  "manifest_version": 3,
+  "name": "KeepFocus",
+  "version": "1.2",
+  "description": "Advanced website blocker with content filtering and scheduling",
 
-    "permissions": [
-      "storage",
-      "declarativeNetRequest",
-      "declarativeNetRequestWithHostAccess",
-      "alarms",
-      "activeTab",
-      "scripting"
-    ],
+  "permissions": [
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "alarms",
+    "activeTab",
+    "scripting"
+  ],
 
-    "host_permissions": [
-      "*://*/*",
-      "https://facebook.com/*",
-      "https://www.facebook.com/*",
-      "https://youtube.com/*",
-      "https://www.youtube.com/*",
-      "https://instagram.com/*",
-      "https://www.instagram.com/*",
-      "https://twitter.com/*",
-      "https://x.com/*"
-    ],
+  "host_permissions": [
+    "*://*/*",
+    "https://facebook.com/*",
+    "https://www.facebook.com/*",
+    "https://youtube.com/*",
+    "https://www.youtube.com/*",
+    "https://instagram.com/*",
+    "https://www.instagram.com/*",
+    "https://twitter.com/*",
+    "https://x.com/*"
+  ],
 
-    "background": {
-      "service_worker": "background.js"
-    },
+  "background": {
+    "service_worker": "background.js"
+  },
 
-    "action": {
-      "default_popup": "popup.html"
-    },
-
-    "content_scripts": [
-      {
-        "matches": [
-          "*://*.facebook.com/*",
-          "*://*.youtube.com/*",
-          "*://*.instagram.com/*",
-          "*://*.twitter.com/*",
-          "*://*.x.com/*"
-        ],
-        "js": ["content.js"],
-        "run_at": "document_idle",
-        "all_frames": false
-      }
-    ],
-
-    "icons": {
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
       "128": "icons/icon128.png"
     }
-  }
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.facebook.com/*",
+        "*://*.youtube.com/*",
+        "*://*.instagram.com/*",
+        "*://*.twitter.com/*",
+        "*://*.x.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/flags/us.svg",
+        "icons/flags/es.svg",
+        "icons/flags/de.svg",
+        "icons/flags/fr.svg",
+        "icons/flags/it.svg",
+        "icons/flags/pt.svg",
+        "icons/flags/ru.svg",
+        "icons/flags/in.svg",
+        "icons/flags/zh.svg",
+        "icons/flags/ja.svg"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
