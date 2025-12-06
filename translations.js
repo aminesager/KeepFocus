@@ -344,14 +344,14 @@ const translations = {
   fr: {
     header: {
       title: "KeepFocus",
-      themeToggle: "Changer de theme",
+      themeToggle: "Changer de thème",
     },
     nav: {
       facebook: "Facebook",
       youtube: "YouTube",
       twitter: "Twitter",
       instagram: "Instagram",
-      settings: "Options",
+      settings: "Paramètres",
     },
     siteSettings: {
       facebook: "Facebook",
@@ -361,17 +361,17 @@ const translations = {
       blockSite: "Bloquer ce site",
     },
     generalSettings: {
-      redirectSettings: "Parametres de redirection",
-      customWebsites: "Sites Web personnalises",
+      redirectSettings: "Paramètres de redirection",
+      customWebsites: "Sites Web personnalisés",
       breakTime: "Temps de pause",
-      pauseTime: "Temps d'arret",
+      pauseTime: "Temps d'arrêt",
     },
     placeholders: {
       redirectInput: "https://exemple.fr",
       siteInput: "exemple.fr",
     },
     buttons: {
-      setRedirect: "Definir",
+      setRedirect: "Définir",
       addWebsite: "Ajouter",
     },
     toggleLabels: {
@@ -382,7 +382,7 @@ const translations = {
       currentRedirect: "Aucune URL de redirection définie",
     },
     siteOptions: {
-      hideFeed: "Masquer le fil d'actualites",
+      hideFeed: "Masquer le fil d'actualité",
       hideLikes: "Masquer les j'aime et commentaires",
       hideChat: "Masquer la barre de chat",
       hideStories: "Masquer les stories",
@@ -394,7 +394,7 @@ const translations = {
       hideSidebar: "Masquer la barre latérale",
       hideComments: "Masquer les commentaires",
       hideShorts: "Masquer les shorts",
-      blockTimeline: "Bloquer le fil d'actualite",
+      blockTimeline: "Bloquer le fil d'actualité",
       hideAllMedia: "Masquer tous les médias",
     },
   },
@@ -674,6 +674,7 @@ async function applyTranslations(language = null) {
     darkModeIcon.alt = t.header.themeToggle;
   }
 
+  // Dispatch language change event for popup.js
   if (typeof Event !== "undefined") {
     const event = new CustomEvent("languageChanged", {
       detail: { language: lang },
@@ -681,6 +682,7 @@ async function applyTranslations(language = null) {
     document.dispatchEvent(event);
   }
 
+  // Trigger translation of site options if popup.js is loaded
   if (window.currentSite && typeof window.updateSiteOptionsUI === "function") {
     setTimeout(() => {
       const data = window.siteOptions || {};
@@ -692,6 +694,7 @@ async function applyTranslations(language = null) {
   }
 }
 
+// Helper function to update current site name based on active nav item
 function updateCurrentSiteName(siteKey) {
   const currentSiteName = document.getElementById("currentSiteName");
   if (currentSiteName) {
@@ -730,34 +733,28 @@ document.addEventListener("DOMContentLoaded", () => {
         const lang = option.getAttribute("data-value");
         const flag = option.getAttribute("data-flag");
 
-        // Update selected language display
         if (selectedFlag) selectedFlag.src = flag;
         if (selectedLang) selectedLang.textContent = lang.toUpperCase();
 
         // Apply translations
         applyTranslations(lang);
 
-        // Hide options
         langOptions.classList.remove("show");
       });
     });
 
-    // Close dropdown when clicking outside
     document.addEventListener("click", () => {
       langOptions.classList.remove("show");
     });
   }
 
-  // Call initPopup from popup.js if it exists
   if (typeof initPopup === "function") {
-    // Small delay to ensure translations are applied first
     setTimeout(() => {
       initPopup();
     }, 100);
   }
 });
 
-// Make functions available globally for popup.js to use
 window.applyTranslations = applyTranslations;
 window.getPreferredLanguage = getPreferredLanguage;
 window.updateCurrentSiteName = updateCurrentSiteName;
