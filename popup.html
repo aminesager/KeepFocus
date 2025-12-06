@@ -9,9 +9,112 @@
     <div class="container">
       <div class="header">
         <h2>KeepFocus</h2>
-        <button id="darkModeToggle" class="dark-btn">
-          <img id="darkModeIcon" src="icons/moon.svg" alt="Theme Toggle" />
-        </button>
+        <div style="display: flex; gap: 10px; align-items: center">
+          <!-- Language Selector -->
+          <div class="lang-dropdown" id="langDropdown">
+            <div class="lang-selected">
+              <img src="icons/flags/us.svg" id="selectedFlag" />
+              <span id="selectedLang"></span>
+            </div>
+
+            <div class="lang-options" id="langOptions">
+              <!-- English (Most Popular) -->
+              <div
+                class="lang-option"
+                data-value="en"
+                data-flag="icons/flags/us.svg"
+              >
+                <img src="icons/flags/us.svg" />
+              </div>
+
+              <!-- Chinese -->
+              <div
+                class="lang-option"
+                data-value="zh"
+                data-flag="icons/flags/cn.svg"
+              >
+                <img src="icons/flags/cn.svg" />
+              </div>
+
+              <!-- Spanish -->
+              <div
+                class="lang-option"
+                data-value="es"
+                data-flag="icons/flags/es.svg"
+              >
+                <img src="icons/flags/es.svg" />
+              </div>
+
+              <!-- Hindi -->
+              <div
+                class="lang-option"
+                data-value="hi"
+                data-flag="icons/flags/in.svg"
+              >
+                <img src="icons/flags/in.svg" />
+              </div>
+
+              <!-- French -->
+              <div
+                class="lang-option"
+                data-value="fr"
+                data-flag="icons/flags/fr.svg"
+              >
+                <img src="icons/flags/fr.svg" />
+              </div>
+
+              <!-- Russian -->
+              <div
+                class="lang-option"
+                data-value="ru"
+                data-flag="icons/flags/ru.svg"
+              >
+                <img src="icons/flags/ru.svg" />
+              </div>
+
+              <!-- Portuguese -->
+              <div
+                class="lang-option"
+                data-value="pt"
+                data-flag="icons/flags/pt.svg"
+              >
+                <img src="icons/flags/pt.svg" />
+              </div>
+
+              <!-- German -->
+              <div
+                class="lang-option"
+                data-value="de"
+                data-flag="icons/flags/de.svg"
+              >
+                <img src="icons/flags/de.svg" />
+              </div>
+
+              <!-- Japanese -->
+              <div
+                class="lang-option"
+                data-value="ja"
+                data-flag="icons/flags/jp.svg"
+              >
+                <img src="icons/flags/jp.svg" />
+              </div>
+
+              <!-- Italian -->
+              <div
+                class="lang-option"
+                data-value="it"
+                data-flag="icons/flags/it.svg"
+              >
+                <img src="icons/flags/it.svg" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Dark Mode Toggle -->
+          <button id="darkModeToggle" class="dark-btn">
+            <img id="darkModeIcon" src="icons/moon.svg" alt="Theme Toggle" />
+          </button>
+        </div>
       </div>
 
       <!-- Navigation Bar -->
@@ -100,7 +203,7 @@
         >
           <!-- Redirect Settings -->
           <div class="section">
-            <h3>Redirect Settings</h3>
+            <h3 class="section-title">Redirect Settings</h3>
             <div class="input-group">
               <input
                 id="redirectInput"
@@ -114,7 +217,7 @@
 
           <!-- Custom Websites -->
           <div class="section">
-            <h3>Custom Websites</h3>
+            <h3 class="section-title">Custom Websites</h3>
             <div class="input-group">
               <input id="siteInput" type="text" placeholder="example.com" />
               <button id="addBtn">Add</button>
@@ -124,7 +227,7 @@
 
           <!-- Break Time -->
           <div class="section">
-            <h3>Break Time</h3>
+            <h3 class="section-title">Break Time</h3>
             <div class="toggle-item">
               <span class="toggle-label">Enable Break Time</span>
               <label class="switch">
@@ -145,7 +248,7 @@
 
           <!-- Pause Time -->
           <div class="section">
-            <h3>Pause Time</h3>
+            <h3 class="section-title">Pause Time</h3>
             <div class="toggle-item">
               <span class="toggle-label">Enable Pause Time</span>
               <label class="switch">

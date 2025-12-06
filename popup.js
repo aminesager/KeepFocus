@@ -1,34 +1,29 @@
-const siteInput = document.getElementById("siteInput");
-const addBtn = document.getElementById("addBtn");
-const siteList = document.getElementById("siteList");
-const redirectInput = document.getElementById("redirectInput");
-const setRedirectBtn = document.getElementById("setRedirectBtn");
-const currentRedirect = document.getElementById("currentRedirect");
-const breakToggle = document.getElementById("breakToggle");
-const pauseToggle = document.getElementById("pauseToggle");
-const breakSettings = document.getElementById("breakSettings");
-const pauseSettings = document.getElementById("pauseSettings");
-const breakStartTime = document.getElementById("breakStartTime");
-const breakEndTime = document.getElementById("breakEndTime");
-const pauseStartTime = document.getElementById("pauseStartTime");
-const pauseEndTime = document.getElementById("pauseEndTime");
-const breakDays = document.getElementById("breakDays");
-const siteToggle = document.getElementById("siteToggle");
-const currentSiteName = document.getElementById("currentSiteName");
-const siteSettings = document.getElementById("siteSettings");
-const generalSettings = document.getElementById("generalSettings");
-const settingsNav = document.getElementById("settingsNav");
-const navItems = document.querySelectorAll(".nav-item:not(.settings-nav)");
+const dropdown = document.getElementById("langDropdown");
+const langOptionsBox = document.getElementById("langOptions");
+const selectedFlag = document.getElementById("selectedFlag");
+const selectedLang = document.getElementById("selectedLang");
 
-const DAYS = [
-  { id: 1, label: "Mon" },
-  { id: 2, label: "Tue" },
-  { id: 3, label: "Wed" },
-  { id: 4, label: "Thu" },
-  { id: 5, label: "Fri" },
-  { id: 6, label: "Sat" },
-  { id: 0, label: "Sun" },
-];
+dropdown.addEventListener("click", () => {
+  langOptionsBox.style.display =
+    langOptionsBox.style.display === "block" ? "none" : "block";
+});
+
+document.querySelectorAll(".lang-option").forEach((option) => {
+  option.addEventListener("click", (event) => {
+    event.stopPropagation();
+
+    selectedFlag.src = option.dataset.flag;
+    selectedLang.textContent = option.dataset.label;
+
+    langOptionsBox.style.display = "none";
+  });
+});
+
+document.addEventListener("click", (e) => {
+  if (!dropdown.contains(e.target)) {
+    langOptionsBox.style.display = "none";
+  }
+});
 
 // Site-specific option configurations
 const SITE_OPTIONS_CONFIG = {
