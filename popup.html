@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html metacharset="UTF-8">
   <head>
     <link rel="stylesheet" href="popup.css" />
@@ -8,13 +7,13 @@
   <body>
     <div class="container">
       <div class="header">
-        <h2>KeepFocus</h2>
+        <h2 data-translation="header.title">KeepFocus</h2>
         <div style="display: flex; gap: 10px; align-items: center">
           <!-- Language Selector -->
           <div class="lang-dropdown" id="langDropdown">
             <div class="lang-selected">
               <img src="icons/flags/us.svg" id="selectedFlag" />
-              <span id="selectedLang"></span>
+              <span id="selectedLang">EN</span>
             </div>
 
             <div class="lang-options" id="langOptions">
@@ -112,7 +111,12 @@
 
           <!-- Dark Mode Toggle -->
           <button id="darkModeToggle" class="dark-btn">
-            <img id="darkModeIcon" src="icons/moon.svg" alt="Theme Toggle" />
+            <img
+              id="darkModeIcon"
+              src="icons/moon.svg"
+              alt="Theme Toggle"
+              data-translation="header.themeToggle"
+            />
           </button>
         </div>
       </div>
@@ -127,7 +131,7 @@
             height="36px"
             width="36px"
           />
-          <span class="nav-label">Facebook</span>
+          <span class="nav-label" data-translation="facebook">Facebook</span>
         </div>
 
         <div class="nav-item" data-site="youtube.com">
@@ -138,7 +142,7 @@
             height="36px"
             width="36px"
           />
-          <span class="nav-label">YouTube</span>
+          <span class="nav-label" data-translation="youtube">YouTube</span>
         </div>
 
         <div class="nav-item" data-site="twitter.com">
@@ -149,7 +153,7 @@
             height="36px"
             width="36px"
           />
-          <span class="nav-label">Twitter</span>
+          <span class="nav-label" data-translation="twitter">Twitter</span>
         </div>
 
         <div class="nav-item" data-site="instagram.com">
@@ -160,7 +164,7 @@
             height="36px"
             width="36px"
           />
-          <span class="nav-label">Instagram</span>
+          <span class="nav-label" data-translation="instagram">Instagram</span>
         </div>
 
         <div class="nav-item settings-nav" id="settingsNav">
@@ -171,7 +175,7 @@
             height="36px"
             width="36px"
           />
-          <span class="nav-label">Settings</span>
+          <span class="nav-label" data-translation="settings">Settings</span>
         </div>
       </div>
 
@@ -180,9 +184,11 @@
         <!-- Site-specific settings -->
         <div id="siteSettings" class="site-settings">
           <div class="site-header">
-            <h3 id="currentSiteName">Facebook</h3>
+            <h3 id="currentSiteName" data-translation="facebook">Facebook</h3>
             <div class="site-toggle">
-              <span class="toggle-label">Block this site</span>
+              <span class="toggle-label" data-translation="blockSite"
+                >Block this site</span
+              >
               <label class="switch">
                 <input type="checkbox" id="siteToggle" checked />
                 <span class="slider"></span>
@@ -203,33 +209,53 @@
         >
           <!-- Redirect Settings -->
           <div class="section">
-            <h3 class="section-title">Redirect Settings</h3>
+            <h3 class="section-title" data-translation="redirectSettings">
+              Redirect Settings
+            </h3>
             <div class="input-group">
               <input
                 id="redirectInput"
                 type="text"
                 placeholder="https://example.com"
+                data-translation-placeholder="redirectInput"
               />
-              <button id="setRedirectBtn">Set</button>
+              <button id="setRedirectBtn" data-translation="setRedirect">
+                Set
+              </button>
             </div>
-            <div id="currentRedirect" class="status-text"></div>
+            <div
+              id="currentRedirect"
+              class="status-text"
+              data-translation="currentRedirect"
+            ></div>
           </div>
 
           <!-- Custom Websites -->
           <div class="section">
-            <h3 class="section-title">Custom Websites</h3>
+            <h3 class="section-title" data-translation="customWebsites">
+              Custom Websites
+            </h3>
             <div class="input-group">
-              <input id="siteInput" type="text" placeholder="example.com" />
-              <button id="addBtn">Add</button>
+              <input
+                id="siteInput"
+                type="text"
+                placeholder="example.com"
+                data-translation-placeholder="siteInput"
+              />
+              <button id="addBtn" data-translation="addWebsite">Add</button>
             </div>
             <ul id="siteList"></ul>
           </div>
 
           <!-- Break Time -->
           <div class="section">
-            <h3 class="section-title">Break Time</h3>
+            <h3 class="section-title" data-translation="breakTime">
+              Break Time
+            </h3>
             <div class="toggle-item">
-              <span class="toggle-label">Enable Break Time</span>
+              <span class="toggle-label" data-translation="enableBreak"
+                >Enable Break Time</span
+              >
               <label class="switch">
                 <input type="checkbox" id="breakToggle" />
                 <span class="slider"></span>
@@ -248,9 +274,13 @@
 
           <!-- Pause Time -->
           <div class="section">
-            <h3 class="section-title">Pause Time</h3>
+            <h3 class="section-title" data-translation="pauseTime">
+              Pause Time
+            </h3>
             <div class="toggle-item">
-              <span class="toggle-label">Enable Pause Time</span>
+              <span class="toggle-label" data-translation="enablePause"
+                >Enable Pause Time</span
+              >
               <label class="switch">
                 <input type="checkbox" id="pauseToggle" />
                 <span class="slider"></span>
@@ -269,6 +299,8 @@
       </div>
     </div>
 
+    <!-- Load translations.js FIRST, then popup.js -->
+    <script src="translations.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>

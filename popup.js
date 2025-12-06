@@ -1,3 +1,29 @@
+(function () {
+  function setupNavigationWithTranslations() {
+    const navItems = document.querySelectorAll(".nav-item:not(.settings-nav)");
+
+    navItems.forEach((item) => {
+      item.addEventListener("click", function () {
+        const siteKey = this.getAttribute("data-site").split(".")[0]; // facebook.com -> facebook
+        if (typeof updateCurrentSiteName === "function") {
+          updateCurrentSiteName(siteKey);
+        }
+      });
+    });
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof initPopup === "function") {
+      const originalInitPopup = initPopup;
+      initPopup = function () {
+        originalInitPopup();
+        setupNavigationWithTranslations();
+      };
+    } else {
+      setupNavigationWithTranslations();
+    }
+  });
+})();
+
 const dropdown = document.getElementById("langDropdown");
 const langOptionsBox = document.getElementById("langOptions");
 const selectedFlag = document.getElementById("selectedFlag");
