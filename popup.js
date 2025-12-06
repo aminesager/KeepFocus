@@ -4,7 +4,7 @@
 
     navItems.forEach((item) => {
       item.addEventListener("click", function () {
-        const siteKey = this.getAttribute("data-site").split(".")[0]; // facebook.com -> facebook
+        const siteKey = this.getAttribute("data-site").split(".")[0];
         if (typeof updateCurrentSiteName === "function") {
           updateCurrentSiteName(siteKey);
         }
@@ -51,7 +51,7 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// Site-specific option configurations
+// Site-specific option configurations (keep original structure)
 const SITE_OPTIONS_CONFIG = {
   "facebook.com": [
     { id: "hideFeed", label: "Hide Feed" },
@@ -83,9 +83,6 @@ const SITE_OPTIONS_CONFIG = {
     { id: "removeColors", label: "Remove Colors" },
   ],
 };
-
-// Current language
-let currentLanguage = "en";
 
 // Original variables from your code
 const siteInput = document.getElementById("siteInput");
@@ -121,8 +118,11 @@ const DAYS = [
   { id: 0, label: "Sun" },
 ];
 
-// Current site being configured
-let currentSite = "facebook.com";
+// Current site being configured - make it globally accessible
+window.currentSite = "facebook.com";
+
+// Site options storage reference
+window.siteOptions = {};
 
 // Initialize the popup
 document.addEventListener("DOMContentLoaded", initPopup);
@@ -131,9 +131,21 @@ async function initPopup() {
   await loadSettings();
   await loadBlockedSites();
   setupEventListeners();
-  await setupNavigation(); // Make this async to load saved nav state
-  loadSiteSettings(currentSite);
+  await setupNavigation();
+  loadSiteSettings(window.currentSite);
   setupDarkMode();
+
+  // Listen for language changes
+  document.addEventListener("languageChanged", handleLanguageChange);
+}
+
+function handleLanguageChange(e) {
+  if (e.detail && e.detail.language) {
+    // Update site options UI with new language
+    if (window.currentSite) {
+      loadSiteSettings(window.currentSite);
+    }
+  }
 }
 
 function setupEventListeners() {
@@ -176,23 +188,23 @@ async function setupNavigation() {
       generalSettings.style.display = "none";
 
       // Update current site
-      currentSite = item.getAttribute("data-site");
+      window.currentSite = item.getAttribute("data-site");
       updateCurrentSiteDisplay();
 
       // Save navigation state
       await chrome.storage.local.set({
-        selectedNav: currentSite,
-        lastSite: currentSite,
+        selectedNav: window.currentSite,
+        lastSite: window.currentSite,
       });
 
       // Load site-specific settings
-      loadSiteSettings(currentSite);
+      loadSiteSettings(window.currentSite);
     });
 
     // Restore saved active state
     if (item.getAttribute("data-site") === savedNav) {
       item.classList.add("active");
-      currentSite = savedSite;
+      window.currentSite = savedSite;
       updateCurrentSiteDisplay();
 
       // Show site settings if not settings nav
@@ -242,6 +254,9 @@ async function loadSiteSettings(site) {
   const defaultSites = data.defaultSites || {};
   const siteOptions = data.siteOptions || {};
 
+  // Store site options globally
+  window.siteOptions = siteOptions;
+
   // Update site toggle
   siteToggle.checked = defaultSites[site] !== false;
 
@@ -249,7 +264,8 @@ async function loadSiteSettings(site) {
   updateSiteOptionsUI(site, siteOptions[site] || {});
 }
 
-function updateSiteOptionsUI(site, options) {
+// Make this function globally accessible
+window.updateSiteOptionsUI = function (site, options) {
   const siteOptionsContainer = document.querySelector(".site-options");
   const config = SITE_OPTIONS_CONFIG[site] || [];
 
@@ -259,8 +275,17 @@ function updateSiteOptionsUI(site, options) {
     const div = document.createElement("div");
     div.className = "option-item";
 
+    // Get translated label if translation function exists
+    let label = optionConfig.label;
+    if (typeof getTranslatedSiteOption === "function") {
+      const translatedLabel = getTranslatedSiteOption(optionConfig.id);
+      if (translatedLabel) {
+        label = translatedLabel;
+      }
+    }
+
     div.innerHTML = `
-      <span class="option-label">${optionConfig.label}</span>
+      <span class="option-label">${label}</span>
       <label class="switch">
         <input type="checkbox" class="site-option" data-option="${
           optionConfig.id
@@ -275,14 +300,14 @@ function updateSiteOptionsUI(site, options) {
   document.querySelectorAll(".site-option").forEach((option) => {
     option.addEventListener("change", updateSiteOptions);
   });
-}
+};
 
 async function toggleCurrentSite() {
   const enabled = siteToggle.checked;
   const data = await chrome.storage.local.get(["defaultSites"]);
   const defaultSites = data.defaultSites || {};
 
-  defaultSites[currentSite] = enabled;
+  defaultSites[window.currentSite] = enabled;
   await chrome.storage.local.set({ defaultSites });
 }
 
@@ -298,8 +323,11 @@ async function updateSiteOptions() {
   });
 
   // Save to storage
-  siteOptions[currentSite] = options;
+  siteOptions[window.currentSite] = options;
   await chrome.storage.local.set({ siteOptions });
+
+  // Update global reference
+  window.siteOptions = siteOptions;
 }
 
 async function loadSettings() {
@@ -438,8 +466,8 @@ async function updatePauseTime() {
 }
 
 function updateCurrentSiteDisplay() {
-  const siteKey = currentSite.split(".")[0];
-  currentSiteName.textContent = getSiteDisplayName(currentSite);
+  const siteKey = window.currentSite.split(".")[0];
+  currentSiteName.textContent = getSiteDisplayName(window.currentSite);
 }
 
 function updateRedirectStatus() {
@@ -455,12 +483,10 @@ function updateRedirectStatus() {
 
 // Dark mode handling
 function setupDarkMode() {
-  // Check if dark mode preference exists in storage
   chrome.storage.local.get(["darkMode", "theme"], (data) => {
     const isDarkMode = data.darkMode || data.theme === "dark";
     if (isDarkMode) {
       document.body.classList.add("dark-mode");
-      // Update icon if it exists
       const icon = document.getElementById("darkModeIcon");
       if (icon) {
         icon.src = "icons/sun.svg";
@@ -469,30 +495,25 @@ function setupDarkMode() {
   });
 }
 
-// Add dark mode toggle if needed
 async function toggleDarkMode() {
   const isDarkMode = document.body.classList.contains("dark-mode");
   document.body.classList.toggle("dark-mode");
 
-  // Save theme preference
   await chrome.storage.local.set({
     darkMode: !isDarkMode,
     theme: !isDarkMode ? "dark" : "light",
   });
 
-  // Update icon
   const icon = document.getElementById("darkModeIcon");
   if (icon) {
     icon.src = !isDarkMode ? "icons/sun.svg" : "icons/moon.svg";
   }
 }
 
-// Toggle dark mode when the button is clicked
 document
   .getElementById("darkModeToggle")
   .addEventListener("click", toggleDarkMode);
 
-// Initialize dark mode icon on load
 document.addEventListener("DOMContentLoaded", () => {
   const icon = document.getElementById("darkModeIcon");
   if (icon) {

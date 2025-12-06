@@ -39,6 +39,22 @@ const translations = {
     statusText: {
       currentRedirect: "No redirect URL set",
     },
+    siteOptions: {
+      hideFeed: "Hide Feed",
+      hideLikes: "Hide Likes and Comments",
+      hideChat: "Hide Chat Bar",
+      hideStories: "Hide Stories",
+      hideReels: "Hide Reels",
+      removeColors: "Remove Colors",
+      hideRecommendations: "Hide Recommendations",
+      redirectToSubs: "Force Redirect to Subscriptions",
+      hideNews: "Hide News",
+      hideSidebar: "Hide Sidebar",
+      hideComments: "Hide Comments",
+      hideShorts: "Hide Shorts",
+      blockTimeline: "Block Timeline",
+      hideAllMedia: "Hide All Media",
+    },
   },
   es: {
     header: {
@@ -80,9 +96,24 @@ const translations = {
     statusText: {
       currentRedirect: "No se ha configurado la redirección",
     },
+    siteOptions: {
+      hideFeed: "Ocultar Feed",
+      hideLikes: "Ocultar Me gusta y Comentarios",
+      hideChat: "Ocultar Barra de Chat",
+      hideStories: "Ocultar Historias",
+      hideReels: "Ocultar Reels",
+      removeColors: "Eliminar Colores",
+      hideRecommendations: "Ocultar Recomendaciones",
+      redirectToSubs: "Forzar Redirección a Suscripciones",
+      hideNews: "Ocultar Noticias",
+      hideSidebar: "Ocultar Barra Lateral",
+      hideComments: "Ocultar Comentarios",
+      hideShorts: "Ocultar Shorts",
+      blockTimeline: "Bloquear Cronología",
+      hideAllMedia: "Ocultar Todos los Medios",
+    },
   },
   de: {
-    // German
     header: {
       title: "KeepFocus",
       themeToggle: "Thema wechseln",
@@ -122,9 +153,24 @@ const translations = {
     statusText: {
       currentRedirect: "Keine Weiterleitungs-URL festgelegt",
     },
+    siteOptions: {
+      hideFeed: "Feed ausblenden",
+      hideLikes: "Likes und Kommentare ausblenden",
+      hideChat: "Chat-Leiste ausblenden",
+      hideStories: "Stories ausblenden",
+      hideReels: "Reels ausblenden",
+      removeColors: "Farben entfernen",
+      hideRecommendations: "Empfehlungen ausblenden",
+      redirectToSubs: "Weiterleitung zu Abonnements erzwingen",
+      hideNews: "News ausblenden",
+      hideSidebar: "Seitenleiste ausblenden",
+      hideComments: "Kommentare ausblenden",
+      hideShorts: "Shorts ausblenden",
+      blockTimeline: "Timeline blockieren",
+      hideAllMedia: "Alle Medien ausblenden",
+    },
   },
   pt: {
-    // Portuguese
     header: {
       title: "KeepFocus",
       themeToggle: "Alternar Tema",
@@ -164,9 +210,24 @@ const translations = {
     statusText: {
       currentRedirect: "Nenhuma URL de redirecionamento definida",
     },
+    siteOptions: {
+      hideFeed: "Ocultar Feed",
+      hideLikes: "Ocultar Curtidas e Comentários",
+      hideChat: "Ocultar Barra de Chat",
+      hideStories: "Ocultar Stories",
+      hideReels: "Ocultar Reels",
+      removeColors: "Remover Cores",
+      hideRecommendations: "Ocultar Recomendações",
+      redirectToSubs: "Forçar Redirecionamento para Inscrições",
+      hideNews: "Ocultar Notícias",
+      hideSidebar: "Ocultar Barra Lateral",
+      hideComments: "Ocultar Comentários",
+      hideShorts: "Ocultar Shorts",
+      blockTimeline: "Bloquear Linha do Tempo",
+      hideAllMedia: "Ocultar Todas as Mídias",
+    },
   },
   ru: {
-    // Russian
     header: {
       title: "KeepFocus",
       themeToggle: "Переключить тему",
@@ -206,9 +267,24 @@ const translations = {
     statusText: {
       currentRedirect: "URL для перенаправления не задан",
     },
+    siteOptions: {
+      hideFeed: "Скрыть ленту",
+      hideLikes: "Скрыть лайки и комментарии",
+      hideChat: "Скрыть панель чата",
+      hideStories: "Скрыть истории",
+      hideReels: "Скрыть рилсы",
+      removeColors: "Удалить цвета",
+      hideRecommendations: "Скрыть рекомендации",
+      redirectToSubs: "Принудительное перенаправление на подписки",
+      hideNews: "Скрыть новости",
+      hideSidebar: "Скрыть боковую панель",
+      hideComments: "Скрыть комментарии",
+      hideShorts: "Скрыть Shorts",
+      blockTimeline: "Блокировать ленту",
+      hideAllMedia: "Скрыть все медиа",
+    },
   },
   hi: {
-    // Hindi
     header: {
       title: "KeepFocus",
       themeToggle: "थीम बदलें",
@@ -248,19 +324,34 @@ const translations = {
     statusText: {
       currentRedirect: "कोई रीडायरेक्ट URL सेट नहीं है",
     },
+    siteOptions: {
+      hideFeed: "फ़ीड छिपाएं",
+      hideLikes: "लाइक्स और कमेंट्स छिपाएं",
+      hideChat: "चैट बार छिपाएं",
+      hideStories: "स्टोरीज़ छिपाएं",
+      hideReels: "रील्स छिपाएं",
+      removeColors: "रंग हटाएं",
+      hideRecommendations: "सिफ़ारिशें छिपाएं",
+      redirectToSubs: "सदस्यता पर पुनर्निर्देशन बल दें",
+      hideNews: "समाचार छिपाएं",
+      hideSidebar: "साइडबार छिपाएं",
+      hideComments: "टिप्पणियाँ छिपाएं",
+      hideShorts: "शॉर्ट्स छिपाएं",
+      blockTimeline: "टाइमलाइन ब्लॉक करें",
+      hideAllMedia: "सभी मीडिया छिपाएं",
+    },
   },
   fr: {
-    // French
     header: {
       title: "KeepFocus",
-      themeToggle: "Changer de thème",
+      themeToggle: "Changer de theme",
     },
     nav: {
       facebook: "Facebook",
       youtube: "YouTube",
       twitter: "Twitter",
       instagram: "Instagram",
-      settings: "Paramètres",
+      settings: "Options",
     },
     siteSettings: {
       facebook: "Facebook",
@@ -270,17 +361,17 @@ const translations = {
       blockSite: "Bloquer ce site",
     },
     generalSettings: {
-      redirectSettings: "Paramètres de redirection",
-      customWebsites: "Sites Web personnalisés",
+      redirectSettings: "Parametres de redirection",
+      customWebsites: "Sites Web personnalises",
       breakTime: "Temps de pause",
-      pauseTime: "Temps d'arrêt",
+      pauseTime: "Temps d'arret",
     },
     placeholders: {
       redirectInput: "https://exemple.fr",
       siteInput: "exemple.fr",
     },
     buttons: {
-      setRedirect: "Définir",
+      setRedirect: "Definir",
       addWebsite: "Ajouter",
     },
     toggleLabels: {
@@ -290,9 +381,24 @@ const translations = {
     statusText: {
       currentRedirect: "Aucune URL de redirection définie",
     },
+    siteOptions: {
+      hideFeed: "Masquer le fil d'actualites",
+      hideLikes: "Masquer les j'aime et commentaires",
+      hideChat: "Masquer la barre de chat",
+      hideStories: "Masquer les stories",
+      hideReels: "Masquer les reels",
+      removeColors: "Supprimer les couleurs",
+      hideRecommendations: "Masquer les recommandations",
+      redirectToSubs: "Forcer la redirection vers les abonnements",
+      hideNews: "Masquer les actualités",
+      hideSidebar: "Masquer la barre latérale",
+      hideComments: "Masquer les commentaires",
+      hideShorts: "Masquer les shorts",
+      blockTimeline: "Bloquer le fil d'actualite",
+      hideAllMedia: "Masquer tous les médias",
+    },
   },
   ja: {
-    // Japanese
     header: {
       title: "KeepFocus",
       themeToggle: "テーマ切り替え",
@@ -332,9 +438,24 @@ const translations = {
     statusText: {
       currentRedirect: "リダイレクトURLが設定されていません",
     },
+    siteOptions: {
+      hideFeed: "フィードを非表示",
+      hideLikes: "いいねとコメントを非表示",
+      hideChat: "チャットバーを非表示",
+      hideStories: "ストーリーを非表示",
+      hideReels: "リールを非表示",
+      removeColors: "色を削除",
+      hideRecommendations: "おすすめを非表示",
+      redirectToSubs: "登録チャンネルに強制リダイレクト",
+      hideNews: "ニュースを非表示",
+      hideSidebar: "サイドバーを非表示",
+      hideComments: "コメントを非表示",
+      hideShorts: "ショートを非表示",
+      blockTimeline: "タイムラインをブロック",
+      hideAllMedia: "すべてのメディアを非表示",
+    },
   },
   zh: {
-    // Chinese (Mandarin)
     header: {
       title: "KeepFocus",
       themeToggle: "切换主题",
@@ -374,9 +495,24 @@ const translations = {
     statusText: {
       currentRedirect: "未设置重定向URL",
     },
+    siteOptions: {
+      hideFeed: "隐藏动态",
+      hideLikes: "隐藏点赞和评论",
+      hideChat: "隐藏聊天栏",
+      hideStories: "隐藏故事",
+      hideReels: "隐藏短视频",
+      removeColors: "移除颜色",
+      hideRecommendations: "隐藏推荐",
+      redirectToSubs: "强制重定向到订阅",
+      hideNews: "隐藏新闻",
+      hideSidebar: "隐藏侧边栏",
+      hideComments: "隐藏评论",
+      hideShorts: "隐藏Shorts",
+      blockTimeline: "阻止时间线",
+      hideAllMedia: "隐藏所有媒体",
+    },
   },
   it: {
-    // Italian
     header: {
       title: "KeepFocus",
       themeToggle: "Cambia Tema",
@@ -416,6 +552,22 @@ const translations = {
     statusText: {
       currentRedirect: "Nessun URL di reindirizzamento impostato",
     },
+    siteOptions: {
+      hideFeed: "Nascondi feed",
+      hideLikes: "Nascondi Mi piace e commenti",
+      hideChat: "Nascondi barra chat",
+      hideStories: "Nascondi storie",
+      hideReels: "Nascondi reel",
+      removeColors: "Rimuovi colori",
+      hideRecommendations: "Nascondi raccomandazioni",
+      redirectToSubs: "Forza reindirizzamento a iscrizioni",
+      hideNews: "Nascondi notizie",
+      hideSidebar: "Nascondi barra laterale",
+      hideComments: "Nascondi commenti",
+      hideShorts: "Nascondi short",
+      blockTimeline: "Blocca timeline",
+      hideAllMedia: "Nascondi tutti i media",
+    },
   },
 };
 
@@ -433,6 +585,26 @@ function getPreferredLanguage() {
   return "en";
 }
 
+// Function to get translated site option
+function getTranslatedSiteOption(optionId) {
+  const lang = getPreferredLanguage();
+  const t = translations[lang] || translations.en;
+
+  if (t.siteOptions && t.siteOptions[optionId]) {
+    return t.siteOptions[optionId];
+  }
+
+  // Fallback to English if translation not found
+  if (translations.en.siteOptions && translations.en.siteOptions[optionId]) {
+    return translations.en.siteOptions[optionId];
+  }
+
+  // Fallback to converting id to readable text
+  return optionId
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (str) => str.toUpperCase());
+}
+
 async function applyTranslations(language = null) {
   const lang = language || getPreferredLanguage();
 
@@ -442,13 +614,11 @@ async function applyTranslations(language = null) {
   // Update selected language display
   const selectedLang = document.getElementById("selectedLang");
   if (selectedLang) {
-    // You can add language names here if needed
     selectedLang.textContent = lang.toUpperCase();
   }
 
   const selectedFlag = document.getElementById("selectedFlag");
   if (selectedFlag) {
-    // Update flag based on selected language
     const flagOption = document.querySelector(
       `.lang-option[data-value="${lang}"]`
     );
@@ -465,7 +635,6 @@ async function applyTranslations(language = null) {
     const parts = key.split(".");
 
     if (parts.length === 1) {
-      // Simple key (e.g., data-translation="facebook")
       if (t.nav && t.nav[key]) {
         element.textContent = t.nav[key];
       } else if (t.siteSettings && t.siteSettings[key]) {
@@ -482,7 +651,6 @@ async function applyTranslations(language = null) {
         element.textContent = t.statusText[key];
       }
     } else if (parts.length === 2) {
-      // Nested key (e.g., data-translation="header.title")
       const [category, subKey] = parts;
       if (t[category] && t[category][subKey]) {
         element.textContent = t[category][subKey];
@@ -504,6 +672,36 @@ async function applyTranslations(language = null) {
   const darkModeIcon = document.getElementById("darkModeIcon");
   if (darkModeIcon && t.header && t.header.themeToggle) {
     darkModeIcon.alt = t.header.themeToggle;
+  }
+
+  if (typeof Event !== "undefined") {
+    const event = new CustomEvent("languageChanged", {
+      detail: { language: lang },
+    });
+    document.dispatchEvent(event);
+  }
+
+  if (window.currentSite && typeof window.updateSiteOptionsUI === "function") {
+    setTimeout(() => {
+      const data = window.siteOptions || {};
+      window.updateSiteOptionsUI(
+        window.currentSite,
+        data[window.currentSite] || {}
+      );
+    }, 50);
+  }
+}
+
+function updateCurrentSiteName(siteKey) {
+  const currentSiteName = document.getElementById("currentSiteName");
+  if (currentSiteName) {
+    currentSiteName.setAttribute("data-translation", siteKey);
+    const lang = getPreferredLanguage();
+    const t = translations[lang] || translations.en;
+
+    if (t.siteSettings && t.siteSettings[siteKey]) {
+      currentSiteName.textContent = t.siteSettings[siteKey];
+    }
   }
 }
 
@@ -559,72 +757,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Helper function to update current site name based on active nav item
-function updateCurrentSiteName(siteKey) {
-  const currentSiteName = document.getElementById("currentSiteName");
-  if (currentSiteName) {
-    currentSiteName.setAttribute("data-translation", siteKey);
-    const lang = getPreferredLanguage();
-    const t = translations[lang] || translations.en;
-
-    if (t.siteSettings && t.siteSettings[siteKey]) {
-      currentSiteName.textContent = t.siteSettings[siteKey];
-    }
-  }
-}
-
 // Make functions available globally for popup.js to use
 window.applyTranslations = applyTranslations;
 window.getPreferredLanguage = getPreferredLanguage;
 window.updateCurrentSiteName = updateCurrentSiteName;
-
-// Export for modules if needed
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = {
-    translations,
-    getPreferredLanguage,
-    applyTranslations,
-    updateCurrentSiteName,
-  };
-}
-
-// Helper function to update current site name
-function updateCurrentSiteName() {
-  const currentSiteName = document.getElementById("currentSiteName");
-  if (currentSiteName) {
-    const siteKey = currentSiteName.getAttribute("data-translation");
-    const lang = getPreferredLanguage();
-    const t = translations[lang];
-
-    if (t.siteSettings && t.siteSettings[siteKey]) {
-      currentSiteName.textContent = t.siteSettings[siteKey];
-    }
-  }
-}
-
-// Initialize when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  // Apply translations
-  applyTranslations();
-
-  // Set up language selector if it exists
-  const languageSelect = document.getElementById("languageSelect");
-  if (languageSelect) {
-    // Set current language
-    languageSelect.value = getPreferredLanguage();
-
-    // Add change event listener
-    languageSelect.addEventListener("change", (e) => {
-      applyTranslations(e.target.value);
-    });
-  }
-
-  // Call initPopup from popup.js if it exists
-  if (typeof initPopup === "function") {
-    initPopup();
-  }
-});
-
-// Make function available globally
-window.applyTranslations = applyTranslations;
-window.getPreferredLanguage = getPreferredLanguage;
+window.getTranslatedSiteOption = getTranslatedSiteOption;
