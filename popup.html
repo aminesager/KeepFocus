@@ -10,23 +10,51 @@
   <body>
     <div class="container">
       <div class="header">
-        <h2 data-translation="header.title">KeepFocus</h2>
-        <div style="display: flex; gap: 10px; align-items: center">
+        <!-- Left side: Logo & Title -->
+        <div class="header-left">
+          <div class="logo-container" title="KeepFocus Home">
+            <div class="logo">
+              <img src="icons/icon128.png" width="32px" height="32px" alt="" />
+            </div>
+            <h2 class="title" data-translation="header.title">KeepFocus</h2>
+          </div>
+        </div>
+
+        <!-- Right side: Actions -->
+        <div class="header-right">
+          <!-- Donate Button -->
+          <button
+            id="donateButton"
+            class="action-btn donate-btn"
+            title="Support KeepFocus"
+          >
+            <span class="action-icon">❤️</span>
+            <span class="action-text" data-translation="header.donate"
+              >Donate</span
+            >
+          </button>
+
           <!-- Language Selector -->
           <div class="lang-dropdown" id="langDropdown">
-            <div class="lang-selected">
-              <img src="icons/flags/us.svg" id="selectedFlag" />
+            <div class="lang-selected" title="Change language">
+              <img
+                src="icons/flags/us.svg"
+                id="selectedFlag"
+                alt="Language flag"
+              />
               <span id="selectedLang">EN</span>
+              <span class="dropdown-arrow">▼</span>
             </div>
 
             <div class="lang-options" id="langOptions">
-              <!-- English (Most Popular) -->
+              <!-- English -->
               <div
                 class="lang-option"
                 data-value="en"
                 data-flag="icons/flags/us.svg"
               >
-                <img src="icons/flags/us.svg" />
+                <img src="icons/flags/us.svg" alt="English" />
+                <span>English</span>
               </div>
 
               <!-- Chinese -->
@@ -35,7 +63,8 @@
                 data-value="zh"
                 data-flag="icons/flags/cn.svg"
               >
-                <img src="icons/flags/cn.svg" />
+                <img src="icons/flags/cn.svg" alt="中文" />
+                <span>中文</span>
               </div>
 
               <!-- Spanish -->
@@ -44,25 +73,8 @@
                 data-value="es"
                 data-flag="icons/flags/es.svg"
               >
-                <img src="icons/flags/es.svg" />
-              </div>
-
-              <!-- Hindi -->
-              <div
-                class="lang-option"
-                data-value="hi"
-                data-flag="icons/flags/in.svg"
-              >
-                <img src="icons/flags/in.svg" />
-              </div>
-
-              <!-- French -->
-              <div
-                class="lang-option"
-                data-value="fr"
-                data-flag="icons/flags/fr.svg"
-              >
-                <img src="icons/flags/fr.svg" />
+                <img src="icons/flags/es.svg" alt="Español" />
+                <span>Español</span>
               </div>
 
               <!-- Russian -->
@@ -71,34 +83,8 @@
                 data-value="ru"
                 data-flag="icons/flags/ru.svg"
               >
-                <img src="icons/flags/ru.svg" />
-              </div>
-
-              <!-- Portuguese -->
-              <div
-                class="lang-option"
-                data-value="pt"
-                data-flag="icons/flags/pt.svg"
-              >
-                <img src="icons/flags/pt.svg" />
-              </div>
-
-              <!-- German -->
-              <div
-                class="lang-option"
-                data-value="de"
-                data-flag="icons/flags/de.svg"
-              >
-                <img src="icons/flags/de.svg" />
-              </div>
-
-              <!-- Japanese -->
-              <div
-                class="lang-option"
-                data-value="ja"
-                data-flag="icons/flags/jp.svg"
-              >
-                <img src="icons/flags/jp.svg" />
+                <img src="icons/flags/ru.svg" alt="Русский" />
+                <span>Русский</span>
               </div>
 
               <!-- Italian -->
@@ -107,19 +93,77 @@
                 data-value="it"
                 data-flag="icons/flags/it.svg"
               >
-                <img src="icons/flags/it.svg" />
+                <img src="icons/flags/it.svg" alt="Italiano" />
+                <span>Italiano</span>
+              </div>
+
+              <!-- Hindi / India -->
+              <div
+                class="lang-option"
+                data-value="hi"
+                data-flag="icons/flags/in.svg"
+              >
+                <img src="icons/flags/in.svg" alt="हिन्दी" />
+                <span>हिन्दी</span>
+              </div>
+
+              <!-- French -->
+              <div
+                class="lang-option"
+                data-value="fr"
+                data-flag="icons/flags/fr.svg"
+              >
+                <img src="icons/flags/fr.svg" alt="Français" />
+                <span>Français</span>
+              </div>
+
+              <!-- Portuguese -->
+              <div
+                class="lang-option"
+                data-value="pt"
+                data-flag="icons/flags/pt.svg"
+              >
+                <img src="icons/flags/pt.svg" alt="Português" />
+                <span>Português</span>
+              </div>
+
+              <!-- German -->
+              <div
+                class="lang-option"
+                data-value="de"
+                data-flag="icons/flags/de.svg"
+              >
+                <img src="icons/flags/de.svg" alt="Deutsch" />
+                <span>Deutsch</span>
+              </div>
+
+              <!-- Japanese -->
+              <div
+                class="lang-option"
+                data-value="ja"
+                data-flag="icons/flags/jp.svg"
+              >
+                <img src="icons/flags/jp.svg" alt="日本語" />
+                <span>日本語</span>
               </div>
             </div>
           </div>
 
           <!-- Dark Mode Toggle -->
-          <button id="darkModeToggle" class="dark-btn">
+          <button
+            id="darkModeToggle"
+            class="action-btn dark-btn"
+            title="Toggle dark mode"
+          >
             <img
               id="darkModeIcon"
               src="icons/moon.svg"
               alt="Theme Toggle"
-              data-translation="header.themeToggle"
+              class="action-icon"
             />
+            <span class="action-text" data-translation="header.themeToggle"
+              >Dark Mode</span
+            >
           </button>
         </div>
       </div>
