@@ -417,7 +417,7 @@ function addSiteToUI(site) {
   siteText.className = "site-text";
   siteText.textContent = site;
   const removeBtn = document.createElement("span");
-  removeBtn.textContent = "Remove";
+  removeBtn.textContent = "X";
   removeBtn.className = "removeBtn";
   removeBtn.addEventListener("click", () => removeSite(site, li));
   li.appendChild(siteText);

@@ -35,7 +35,7 @@ const translations = {
     toggleLabels: {
       enableBreak: "Enable Break Time",
       enablePause: "Enable Pause Time",
-      enableBlock: "english missing",
+      enableBlock: "Enable Blocking Adult Content",
     },
     statusText: {
       currentRedirect: "No redirect URL set",

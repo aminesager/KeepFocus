@@ -601,9 +601,9 @@ li {
 
 .removeBtn {
   color: #ef4444;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
-  padding: 4px 8px;
+  padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.2s;
