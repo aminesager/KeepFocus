@@ -35,6 +35,7 @@ const translations = {
     toggleLabels: {
       enableBreak: "Enable Break Time",
       enablePause: "Enable Pause Time",
+      enableBlock: "english missing",
     },
     statusText: {
       currentRedirect: "No redirect URL set",
@@ -92,6 +93,7 @@ const translations = {
     toggleLabels: {
       enableBreak: "Habilitar tiempo de descanso",
       enablePause: "Habilitar tiempo de pausa",
+      enableBlock: "Habilitar bloqueo de contenido para adultos",
     },
     statusText: {
       currentRedirect: "No se ha configurado la redirección",
@@ -149,6 +151,7 @@ const translations = {
     toggleLabels: {
       enableBreak: "Pausenzeit aktivieren",
       enablePause: "Auszeit aktivieren",
+      enableBlock: "Erwachseneninhalt blockieren aktivieren",
     },
     statusText: {
       currentRedirect: "Keine Weiterleitungs-URL festgelegt",
@@ -206,6 +209,7 @@ const translations = {
     toggleLabels: {
       enableBreak: "Ativar tempo de descanso",
       enablePause: "Ativar tempo de pausa",
+      enableBlock: "Ativar bloqueio de conteúdo adulto",
     },
     statusText: {
       currentRedirect: "Nenhuma URL de redirecionamento definida",
@@ -263,6 +267,7 @@ const translations = {
     toggleLabels: {
       enableBreak: "Включить время перерыва",
       enablePause: "Включить время паузы",
+      enableBlock: "Включить блокировку взрослого контента",
     },
     statusText: {
       currentRedirect: "URL для перенаправления не задан",
@@ -320,6 +325,7 @@ const translations = {
     toggleLabels: {
       enableBreak: "ब्रेक टाइम सक्षम करें",
       enablePause: "पॉज टाइम सक्षम करें",
+      enableBlock: "वयस्क सामग्री को ब्लॉक करना सक्षम करें",
     },
     statusText: {
       currentRedirect: "कोई रीडायरेक्ट URL सेट नहीं है",
@@ -377,6 +383,7 @@ const translations = {
     toggleLabels: {
       enableBreak: "Activer le temps de pause",
       enablePause: "Activer le temps d'arrêt",
+      enableBlock: "Activer le blocage du contenu pour adultes",
     },
     statusText: {
       currentRedirect: "Aucune URL de redirection définie",
@@ -434,6 +441,7 @@ const translations = {
     toggleLabels: {
       enableBreak: "休憩時間を有効にする",
       enablePause: "一時停止時間を有効にする",
+      enableBlock: "成人向けコンテンツのブロックを有効にする",
     },
     statusText: {
       currentRedirect: "リダイレクトURLが設定されていません",
@@ -491,6 +499,7 @@ const translations = {
     toggleLabels: {
       enableBreak: "启用休息时间",
       enablePause: "启用暂停时间",
+      enableBlock: "启用成人内容屏蔽",
     },
     statusText: {
       currentRedirect: "未设置重定向URL",
@@ -548,6 +557,7 @@ const translations = {
     toggleLabels: {
       enableBreak: "Abilita tempo di pausa",
       enablePause: "Abilita tempo di sospensione",
+      enableBlock: "Abilita il blocco dei contenuti per adulti",
     },
     statusText: {
       currentRedirect: "Nessun URL di reindirizzamento impostato",
