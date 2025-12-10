@@ -218,12 +218,28 @@ function applyInstagramModifications(options) {
 
   if (options.hideLikes) {
     css += `
-      span._ac2a,
-      section span[aria-label*="like"],
-      button[aria-label*="Like"],
-      article span[aria-label*="likes"]
-      { display: none !important; }
-    `;
+    /* Hide like‑count / comment‑count / comments list / action buttons */
+    a[href*="/liked_by"],
+    a[href*="/likes"],
+    a[href*="/comments"],
+    a[href*="/liked"],
+
+    button[aria-label="Like"],
+    button[aria-label="Unlike"],
+    button[aria-label="Comment"],
+    button[aria-label="Share"],
+    button[aria-label="Save"],
+    svg[aria-label="Like"],
+    svg[aria-label="Unlike"],
+    svg[aria-label="Comment"],
+    svg[aria-label="Share"],
+    svg[aria-label="Save"]
+
+    
+     {
+      display: none !important;
+    }
+  `;
   }
 
   if (options.hideStories) {
@@ -238,12 +254,25 @@ function applyInstagramModifications(options) {
 
   if (options.hideReels) {
     css += `
-      [aria-label="Reels"],
-      a[href*="/reel/"],
-      ._aagv,
-      [aria-label*="Reel"]
-      { display: none !important; }
-    `;
+    /* Hide the entire Reels nav button by its exact href */
+    a[href="/reels/"] {
+      display: none !important;
+      pointer-events: none !important;
+      visibility: hidden !important;
+    }
+
+    /* Also hide any children inside that button (icon, text) */
+    a[href="/reels/"] * {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    /* Extra safety: ONLY hide Reels icon if it's INSIDE a nav button */
+    a[href="/reels/"] svg[aria-label="Reels"] {
+      display: none !important;
+    }
+  `;
   }
 
   if (options.removeColors) {
