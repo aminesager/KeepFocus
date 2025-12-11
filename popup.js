@@ -95,6 +95,8 @@ const breakToggle = document.getElementById("breakToggle");
 const pauseToggle = document.getElementById("pauseToggle");
 const breakSettings = document.getElementById("breakSettings");
 const pauseSettings = document.getElementById("pauseSettings");
+const adultToggle = document.getElementById("adultToggle");
+const adultSettings = document.getElementById("adultSettings");
 const breakStartTime = document.getElementById("breakStartTime");
 const breakEndTime = document.getElementById("breakEndTime");
 const pauseStartTime = document.getElementById("pauseStartTime");
@@ -163,6 +165,7 @@ function setupEventListeners() {
   breakEndTime.addEventListener("change", updateBreakTime);
   pauseStartTime.addEventListener("change", updatePauseTime);
   pauseEndTime.addEventListener("change", updatePauseTime);
+  adultToggle.addEventListener("change", toggleAdultContent);
 
   // Site toggle
   siteToggle.addEventListener("change", toggleCurrentSite);
@@ -340,6 +343,7 @@ async function loadSettings() {
     "pauseStartTime",
     "pauseEndTime",
     "breakDays",
+    "adultEnabled",
   ]);
 
   // Redirect URL
@@ -360,6 +364,10 @@ async function loadSettings() {
 
   // Break days
   renderDaySelector(data.breakDays || [1, 2, 3, 4, 5]);
+
+  // adult content settings
+  adultToggle.checked = data.adultEnabled || false;
+  adultSettings.style.display = data.adultEnabled ? "block" : "none";
 }
 
 function renderDaySelector(selectedDays) {
@@ -449,6 +457,16 @@ async function togglePauseTime() {
   const enabled = pauseToggle.checked;
   await chrome.storage.local.set({ pauseEnabled: enabled });
   pauseSettings.style.display = enabled ? "block" : "none";
+}
+
+async function toggleAdultContent() {
+  const enabled = adultToggle.checked;
+  await chrome.storage.local.set({ adultEnabled: enabled }); // <-- This is correct
+  await chrome.runtime.sendMessage({ action: "updateRules" });
+  adultSettings.style.display = enabled ? "block" : "none";
+  console.log(
+    "Adult content blocking is now " + (enabled ? "enabled" : "disabled")
+  );
 }
 
 async function updateBreakTime() {
