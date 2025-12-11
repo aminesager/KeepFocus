@@ -1,15 +1,13 @@
 (function () {
   function setupNavigationWithTranslations() {
-    const navItems = document.querySelectorAll(".nav-item:not(.settings-nav)");
+    // This function can initialize translation-related setup if needed
+    // But should NOT add click listeners - those are in setupNavigation()
 
-    navItems.forEach((item) => {
-      item.addEventListener("click", function () {
-        const siteKey = this.getAttribute("data-site").split(".")[0];
-        if (typeof updateCurrentSiteName === "function") {
-          updateCurrentSiteName(siteKey);
-        }
-      });
-    });
+    // If updateCurrentSiteName needs to be called on initial load:
+    if (window.currentSite && typeof updateCurrentSiteName === "function") {
+      const siteKey = window.currentSite.split(".")[0];
+      updateCurrentSiteName(siteKey);
+    }
   }
   document.addEventListener("DOMContentLoaded", function () {
     if (typeof initPopup === "function") {
@@ -139,6 +137,11 @@ async function initPopup() {
 
   // Listen for language changes
   document.addEventListener("languageChanged", handleLanguageChange);
+
+  // Smooth popup reveal
+  requestAnimationFrame(() => {
+    document.body.classList.add("popup-loaded");
+  });
 }
 
 function handleLanguageChange(e) {
@@ -173,9 +176,13 @@ function setupEventListeners() {
 
 async function setupNavigation() {
   // Load saved navigation state
-  const data = await chrome.storage.local.get(["selectedNav", "lastSite"]);
+  const data = await chrome.storage.local.get(["selectedNav"]);
   const savedNav = data.selectedNav || "facebook.com";
-  const savedSite = data.lastSite || "facebook.com";
+
+  // FIRST: Remove ALL active classes from everything
+  document.querySelectorAll(".nav-item").forEach((nav) => {
+    nav.classList.remove("active");
+  });
 
   // Set up navigation items
   document.querySelectorAll(".nav-item:not(.settings-nav)").forEach((item) => {
@@ -194,20 +201,25 @@ async function setupNavigation() {
       window.currentSite = item.getAttribute("data-site");
       updateCurrentSiteDisplay();
 
+      // Add translation update
+      const siteKey = window.currentSite.split(".")[0];
+      if (typeof updateCurrentSiteName === "function") {
+        updateCurrentSiteName(siteKey);
+      }
+
       // Save navigation state
       await chrome.storage.local.set({
         selectedNav: window.currentSite,
-        lastSite: window.currentSite,
       });
 
       // Load site-specific settings
       loadSiteSettings(window.currentSite);
     });
 
-    // Restore saved active state
+    // Restore saved active state AFTER setting up listeners
     if (item.getAttribute("data-site") === savedNav) {
       item.classList.add("active");
-      window.currentSite = savedSite;
+      window.currentSite = savedNav;
       updateCurrentSiteDisplay();
 
       // Show site settings if not settings nav

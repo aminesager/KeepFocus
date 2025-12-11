@@ -6,6 +6,14 @@ body {
   padding: 0;
   background: #f5f6fa;
   color: #1a1a1a;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+body.popup-loaded {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 body.dark-mode .dark-btn img {
@@ -51,7 +59,7 @@ body.dark-mode .dark-btn img {
   transition: transform 0.2s;
   padding: 4px 8px;
   border-radius: 8px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .logo-container:hover {
