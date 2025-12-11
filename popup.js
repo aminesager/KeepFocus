@@ -1,27 +1,3 @@
-(function () {
-  function setupNavigationWithTranslations() {
-    // This function can initialize translation-related setup if needed
-    // But should NOT add click listeners - those are in setupNavigation()
-
-    // If updateCurrentSiteName needs to be called on initial load:
-    if (window.currentSite && typeof updateCurrentSiteName === "function") {
-      const siteKey = window.currentSite.split(".")[0];
-      updateCurrentSiteName(siteKey);
-    }
-  }
-  document.addEventListener("DOMContentLoaded", function () {
-    if (typeof initPopup === "function") {
-      const originalInitPopup = initPopup;
-      initPopup = function () {
-        originalInitPopup();
-        setupNavigationWithTranslations();
-      };
-    } else {
-      setupNavigationWithTranslations();
-    }
-  });
-})();
-
 const dropdown = document.getElementById("langDropdown");
 const langOptionsBox = document.getElementById("langOptions");
 const selectedFlag = document.getElementById("selectedFlag");
@@ -106,7 +82,6 @@ const siteSettings = document.getElementById("siteSettings");
 const generalSettings = document.getElementById("generalSettings");
 const settingsNav = document.getElementById("settingsNav");
 const navItems = document.querySelectorAll(".nav-item:not(.settings-nav)");
-const languageSelect = document.getElementById("languageSelect");
 
 const DAYS = [
   { id: 1, label: "Mon" },
@@ -117,9 +92,6 @@ const DAYS = [
   { id: 6, label: "Sat" },
   { id: 0, label: "Sun" },
 ];
-
-// Current site being configured - make it globally accessible
-window.currentSite = "facebook.com";
 
 // Site options storage reference
 window.siteOptions = {};
@@ -543,13 +515,3 @@ async function toggleDarkMode() {
 document
   .getElementById("darkModeToggle")
   .addEventListener("click", toggleDarkMode);
-
-document.addEventListener("DOMContentLoaded", () => {
-  const icon = document.getElementById("darkModeIcon");
-  if (icon) {
-    chrome.storage.local.get(["darkMode", "theme"], (data) => {
-      const isDarkMode = data.darkMode || data.theme === "dark";
-      icon.src = isDarkMode ? "icons/sun.svg" : "icons/moon.svg";
-    });
-  }
-});
