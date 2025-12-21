@@ -181,16 +181,11 @@ function applyYouTubeModifications(options) {
   document.head.appendChild(style);
   currentStyles = style;
 
-  // Force redirect to subscriptions
   if (
     options.redirectToSubs &&
     !window.location.pathname.includes("/feed/subscriptions")
   ) {
-    if (
-      window.location.pathname === "/" ||
-      window.location.pathname.includes("/watch") ||
-      window.location.pathname.includes("/shorts/")
-    ) {
+    if (window.location.pathname === "/") {
       window.location.href = "https://www.youtube.com/feed/subscriptions";
     }
   }
