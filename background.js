@@ -6,15 +6,8 @@ const DEFAULT_SITES = [
   "x.com",
   "tiktok.com",
 ];
-const BAD_SITES = [
-  "xnxx.com",
-  "pornhub.com",
-  "redtube.com",
-  "youporn.com",
-  "xvideos.com",
-  "vava.com",
-  "kaka.com",
-];
+
+import { BAD_SITES } from "./data/bad-sites-data";
 
 chrome.runtime.onInstalled.addListener(async () => {
   console.log("Extension installed/updated");
