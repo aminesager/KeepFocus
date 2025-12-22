@@ -1,4 +1,4 @@
-window.BAD_SITES = [
+const BAD_SITES = [
   "xnxx.com",
   "pornhub.com",
   "redtube.com",
@@ -8,3 +8,4 @@ window.BAD_SITES = [
   "kaka.com",
   "twitch.tv",
 ];
+chrome.storage.local.set({ BAD_SITES });

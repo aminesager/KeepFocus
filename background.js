@@ -7,7 +7,13 @@ const DEFAULT_SITES = [
   "tiktok.com",
 ];
 
-import { BAD_SITES } from "./data/bad-sites-data";
+let BAD_SITES = [];
+
+chrome.storage.local.get(["BAD_SITES"], (data) => {
+  BAD_SITES = data.BAD_SITES || [];
+  console.log("Loaded:", BAD_SITES);
+  updateDNRRules(); // Call your function here
+});
 
 chrome.runtime.onInstalled.addListener(async () => {
   console.log("Extension installed/updated");
