@@ -1,0 +1,30 @@
+/* theme.css - Theme-specific icons and overrides */
+
+/* Icons */
+.moon-icon,
+.sun-icon {
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-position: center;
+}
+
+.moon-icon {
+  background-image: url("moon.svg");
+}
+
+.sun-icon {
+  background-image: url("sun.svg");
+}
+
+body.dark-mode .moon-icon {
+  background-image: url("sun.svg");
+}
+
+body:not(.dark-mode) .sun-icon {
+  background-image: url("moon.svg");
+}
+
+body.dark-mode .dark-btn img {
+  filter: invert(1) brightness(1.5);
+}

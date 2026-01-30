@@ -1,0 +1,228 @@
+/* components.css - Reusable UI components */
+
+/* Option Items & Toggle Items */
+.option-item,
+.toggle-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  border-bottom: 1px solid #f1f2f5;
+}
+
+.option-item:last-child,
+.toggle-item:last-child {
+  border-bottom: none;
+}
+
+.option-label,
+.toggle-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Inputs */
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #dfe3ea;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fafbff;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.dark-mode input {
+  background: #262830 !important;
+  color: white !important;
+  border-color: #33343d !important;
+}
+
+input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+input::placeholder {
+  color: #999;
+}
+
+.dark-mode input::placeholder {
+  color: #a9a9a9 !important;
+}
+
+/* Buttons */
+button {
+  padding: 10px 16px;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button:hover {
+  background: #585cf0;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.dark-mode button:hover {
+  background: #7c82ff;
+}
+
+button.secondary {
+  background: #737a87;
+}
+
+button.secondary:hover {
+  background: #5f6570;
+}
+
+/* Lists */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+li {
+  background: #fff;
+  border: 1px solid #e7e9ee;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.dark-mode li {
+  background: #22232b !important;
+  border-color: #30323a !important;
+}
+
+.site-text {
+  font-size: 13px;
+  color: #333;
+}
+
+.dark-mode .site-text {
+  color: #e0e0e0 !important;
+}
+
+.removeBtn {
+  color: #ef4444;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.removeBtn:hover {
+  background: #ffe6e6;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  width: 42px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #c9ced9;
+  transition: 0.25s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 2px;
+  background: #fff;
+  border-radius: 50%;
+  transition: 0.25s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+input:checked + .slider {
+  background-color: #6366f1;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Time Inputs */
+.time-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.time-inputs input {
+  width: 100px;
+}
+
+/* Days Selector */
+.days-selector {
+  display: flex;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.day-btn {
+  flex: 1;
+  padding: 8px 0;
+  font-size: 11px;
+  background: #f2f3f7;
+  border: 1px solid #dfe3ea;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.day-btn.active {
+  background: #6366f1;
+  color: white;
+  border-color: #6366f1;
+}
+
+/* Status Text */
+.status-text {
+  font-size: 13px;
+  color: #666;
+  margin-top: 8px;
+}

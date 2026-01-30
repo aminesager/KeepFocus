@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="css/popup.css" />
+    <link rel="stylesheet" href="src/popup/styles/popup.css" />
   </head>
 
   <body>
@@ -14,7 +14,12 @@
         <div class="header-left">
           <div class="logo-container" title="KeepFocus Home">
             <div class="logo">
-              <img src="icons/icon128.png" width="38px" height="38px" alt="" />
+              <img
+                src="src/assets/icons/icon128.png"
+                width="38px"
+                height="38px"
+                alt=""
+              />
             </div>
             <h2 class="title" data-translation="header.title">KeepFocus</h2>
           </div>
@@ -38,7 +43,7 @@
           <div class="lang-dropdown" id="langDropdown">
             <div class="lang-selected" title="Change language">
               <img
-                src="icons/flags/us.svg"
+                src="src/assets/icons/flags/us.svg"
                 id="selectedFlag"
                 alt="Language flag"
               />
@@ -51,9 +56,9 @@
               <div
                 class="lang-option"
                 data-value="en"
-                data-flag="icons/flags/us.svg"
+                data-flag="src/assets/icons/flags/us.svg"
               >
-                <img src="icons/flags/us.svg" alt="English" />
+                <img src="src/assets/icons/flags/us.svg" alt="English" />
                 <span>English</span>
               </div>
 
@@ -61,9 +66,9 @@
               <div
                 class="lang-option"
                 data-value="zh"
-                data-flag="icons/flags/cn.svg"
+                data-flag="src/assets/icons/flags/cn.svg"
               >
-                <img src="icons/flags/cn.svg" alt="中文" />
+                <img src="src/assets/icons/flags/cn.svg" alt="中文" />
                 <span>中文</span>
               </div>
 
@@ -71,9 +76,9 @@
               <div
                 class="lang-option"
                 data-value="es"
-                data-flag="icons/flags/es.svg"
+                data-flag="src/assets/icons/flags/es.svg"
               >
-                <img src="icons/flags/es.svg" alt="Español" />
+                <img src="src/assets/icons/flags/es.svg" alt="Español" />
                 <span>Español</span>
               </div>
 
@@ -81,9 +86,9 @@
               <div
                 class="lang-option"
                 data-value="ru"
-                data-flag="icons/flags/ru.svg"
+                data-flag="src/assets/icons/flags/ru.svg"
               >
-                <img src="icons/flags/ru.svg" alt="Русский" />
+                <img src="src/assets/icons/flags/ru.svg" alt="Русский" />
                 <span>Русский</span>
               </div>
 
@@ -91,9 +96,9 @@
               <div
                 class="lang-option"
                 data-value="it"
-                data-flag="icons/flags/it.svg"
+                data-flag="src/assets/icons/flags/it.svg"
               >
-                <img src="icons/flags/it.svg" alt="Italiano" />
+                <img src="src/assets/icons/flags/it.svg" alt="Italiano" />
                 <span>Italiano</span>
               </div>
 
@@ -101,9 +106,9 @@
               <div
                 class="lang-option"
                 data-value="hi"
-                data-flag="icons/flags/in.svg"
+                data-flag="src/assets/icons/flags/in.svg"
               >
-                <img src="icons/flags/in.svg" alt="हिन्दी" />
+                <img src="src/assets/icons/flags/in.svg" alt="हिन्दी" />
                 <span>हिन्दी</span>
               </div>
 
@@ -111,9 +116,9 @@
               <div
                 class="lang-option"
                 data-value="fr"
-                data-flag="icons/flags/fr.svg"
+                data-flag="src/assets/icons/flags/fr.svg"
               >
-                <img src="icons/flags/fr.svg" alt="Français" />
+                <img src="src/assets/icons/flags/fr.svg" alt="Français" />
                 <span>Français</span>
               </div>
 
@@ -121,9 +126,9 @@
               <div
                 class="lang-option"
                 data-value="pt"
-                data-flag="icons/flags/br.svg"
+                data-flag="src/assets/icons/flags/br.svg"
               >
-                <img src="icons/flags/br.svg" alt="Português" />
+                <img src="src/assets/icons/flags/br.svg" alt="Português" />
                 <span>Português</span>
               </div>
 
@@ -131,9 +136,9 @@
               <div
                 class="lang-option"
                 data-value="de"
-                data-flag="icons/flags/de.svg"
+                data-flag="src/assets/icons/flags/de.svg"
               >
-                <img src="icons/flags/de.svg" alt="Deutsch" />
+                <img src="src/assets/icons/flags/de.svg" alt="Deutsch" />
                 <span>Deutsch</span>
               </div>
 
@@ -141,9 +146,9 @@
               <div
                 class="lang-option"
                 data-value="tn"
-                data-flag="icons/flags/tn.svg"
+                data-flag="src/assets/icons/flags/tn.svg"
               >
-                <img src="icons/flags/tn.svg" alt="Tounsi" />
+                <img src="src/assets/icons/flags/tn.svg" alt="Tounsi" />
                 <span>Tounsi</span>
               </div>
 
@@ -151,18 +156,18 @@
               <div
                 class="lang-option"
                 data-value="ja"
-                data-flag="icons/flags/jp.svg"
+                data-flag="src/assets/icons/flags/jp.svg"
               >
-                <img src="icons/flags/jp.svg" alt="日本語" />
+                <img src="src/assets/icons/flags/jp.svg" alt="日本語" />
                 <span>日本語</span>
               </div>
               <!-- Turkish -->
               <div
                 class="lang-option"
                 data-value="tr"
-                data-flag="icons/flags/tr.svg"
+                data-flag="src/assets/icons/flags/tr.svg"
               >
-                <img src="icons/flags/tr.svg" alt="Türkçe" />
+                <img src="src/assets/icons/flags/tr.svg" alt="Türkçe" />
                 <span>Türkçe</span>
               </div>
 
@@ -170,9 +175,9 @@
               <div
                 class="lang-option"
                 data-value="lt"
-                data-flag="icons/flags/lt.svg"
+                data-flag="src/assets/icons/flags/lt.svg"
               >
-                <img src="icons/flags/lt.svg" alt="Lietuvių" />
+                <img src="src/assets/icons/flags/lt.svg" alt="Lietuvių" />
                 <span>Lietuvių</span>
               </div>
 
@@ -180,9 +185,9 @@
               <div
                 class="lang-option"
                 data-value="bg"
-                data-flag="icons/flags/bg.svg"
+                data-flag="src/assets/icons/flags/bg.svg"
               >
-                <img src="icons/flags/bg.svg" alt="Български" />
+                <img src="src/assets/icons/flags/bg.svg" alt="Български" />
                 <span>Български</span>
               </div>
 
@@ -190,9 +195,9 @@
               <div
                 class="lang-option"
                 data-value="el"
-                data-flag="icons/flags/gr.svg"
+                data-flag="src/assets/icons/flags/gr.svg"
               >
-                <img src="icons/flags/gr.svg" alt="Ελληνικά" />
+                <img src="src/assets/icons/flags/gr.svg" alt="Ελληνικά" />
                 <span>Ελληνικά</span>
               </div>
             </div>
@@ -206,7 +211,7 @@
           >
             <img
               id="darkModeIcon"
-              src="icons/moon.svg"
+              src="src/assets/icons/moon.svg"
               alt="Theme Toggle"
               class="action-icon"
             />
@@ -222,7 +227,7 @@
         <div class="nav-item active" data-site="facebook.com">
           <img
             class="nav-icon"
-            src="icons/fb.png"
+            src="src/assets/icons/fb.png"
             alt="Facebook Logo"
             height="36px"
             width="36px"
@@ -233,7 +238,7 @@
         <div class="nav-item" data-site="youtube.com">
           <img
             class="nav-icon"
-            src="icons/youtube.png"
+            src="src/assets/icons/youtube.png"
             alt="YouTube Logo"
             height="36px"
             width="36px"
@@ -244,7 +249,7 @@
         <div class="nav-item" data-site="twitter.com">
           <img
             class="nav-icon"
-            src="icons/twitter.png"
+            src="src/assets/icons/twitter.png"
             alt="Twitter Logo"
             height="36px"
             width="36px"
@@ -255,7 +260,7 @@
         <div class="nav-item" data-site="instagram.com">
           <img
             class="nav-icon"
-            src="icons/instagram.png"
+            src="src/assets/icons/instagram.png"
             alt="Instagram Logo"
             height="36px"
             width="36px"
@@ -266,7 +271,7 @@
         <div class="nav-item settings-nav" id="settingsNav">
           <img
             class="nav-icon"
-            src="icons/settings.png"
+            src="src/assets/icons/settings.png"
             alt="Settings Logo"
             height="36px"
             width="36px"
@@ -412,11 +417,11 @@
       </div>
     </div>
 
-    <script src="./data/translation-data.js"></script>
-    <script src="translations.js"></script>
-    <script src="langSelector.js"></script>
-    <!-- NEW file added here -->
-    <script src="popup.js"></script>
-    <!-- Now loads after langSelector.js -->
+    <script src="./src/shared/data/translation-data.js"></script>
+    <script src="/src/shared/utils/translations.js"></script>
+    <script src="/src/popup/scripts/langSelector.js"></script>
+    <script src="/src/popup/scripts/settings.js"></script>
+    <script src="/src/popup/scripts/navigation.js"></script>
+    <script src="/src/popup/scripts/popup.js"></script>
   </body>
 </html>
