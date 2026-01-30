@@ -7,18 +7,30 @@ function initLanguageSelector() {
   const selectedLang = document.getElementById("selectedLang");
 
   if (!dropdown || !langOptionsBox) {
-    console.warn("Language selector elements not found");
     return;
   }
 
-  // Toggle dropdown visibility using inline styles (same as original)
+  function restoreSavedLanguage() {
+    const savedLang = localStorage.getItem("keepfocus_language") || "en";
+
+    const savedOption = document.querySelector(
+      `.lang-option[data-value="${savedLang}"]`,
+    );
+    if (savedOption && selectedFlag && selectedLang) {
+      // Update flag and language code
+      selectedFlag.src = savedOption.dataset.flag;
+      selectedLang.textContent = savedLang.toUpperCase();
+    }
+  }
+
+  restoreSavedLanguage();
+
   dropdown.addEventListener("click", (e) => {
     e.stopPropagation();
     langOptionsBox.style.display =
       langOptionsBox.style.display === "block" ? "none" : "block";
   });
 
-  // Handle language selection
   document.querySelectorAll(".lang-option").forEach((option) => {
     option.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -26,27 +38,21 @@ function initLanguageSelector() {
       selectedFlag.src = option.dataset.flag;
       selectedLang.textContent = option.dataset.value.toUpperCase();
 
-      // Close dropdown
       langOptionsBox.style.display = "none";
 
-      // Apply translations if function exists
       if (typeof applyTranslations === "function") {
         applyTranslations(option.dataset.value);
       }
     });
   });
 
-  // Close dropdown when clicking outside
   document.addEventListener("click", (e) => {
     if (!dropdown.contains(e.target)) {
       langOptionsBox.style.display = "none";
     }
   });
-
-  console.log("Language selector initialized");
 }
 
-// Initialize when DOM is ready
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initLanguageSelector);
 } else {
