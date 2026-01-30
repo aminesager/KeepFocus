@@ -1,4 +1,4 @@
-// popup.js - Main popup logic WITHOUT language dropdown code
+// popup.js - Main popup logic WITHOUT settings code
 
 // Site-specific option configurations
 const SITE_OPTIONS_CONFIG = {
@@ -33,39 +33,11 @@ const SITE_OPTIONS_CONFIG = {
   ],
 };
 
-// DOM elements
-const siteInput = document.getElementById("siteInput");
-const addBtn = document.getElementById("addBtn");
-const siteList = document.getElementById("siteList");
-const redirectInput = document.getElementById("redirectInput");
-const setRedirectBtn = document.getElementById("setRedirectBtn");
-const currentRedirect = document.getElementById("currentRedirect");
-const breakToggle = document.getElementById("breakToggle");
-const pauseToggle = document.getElementById("pauseToggle");
-const breakSettings = document.getElementById("breakSettings");
-const pauseSettings = document.getElementById("pauseSettings");
-const adultToggle = document.getElementById("adultToggle");
-const adultSettings = document.getElementById("adultSettings");
-const breakStartTime = document.getElementById("breakStartTime");
-const breakEndTime = document.getElementById("breakEndTime");
-const pauseStartTime = document.getElementById("pauseStartTime");
-const pauseEndTime = document.getElementById("pauseEndTime");
-const breakDays = document.getElementById("breakDays");
-const siteToggle = document.getElementById("siteToggle");
+// DOM elements (navigation only)
 const currentSiteName = document.getElementById("currentSiteName");
 const siteSettings = document.getElementById("siteSettings");
 const generalSettings = document.getElementById("generalSettings");
 const settingsNav = document.getElementById("settingsNav");
-
-const DAYS = [
-  { id: 1, label: "Mon" },
-  { id: 2, label: "Tue" },
-  { id: 3, label: "Wed" },
-  { id: 4, label: "Thu" },
-  { id: 5, label: "Fri" },
-  { id: 6, label: "Sat" },
-  { id: 0, label: "Sun" },
-];
 
 // Site options storage reference
 window.siteOptions = {};
@@ -74,14 +46,19 @@ window.siteOptions = {};
 document.addEventListener("DOMContentLoaded", initPopup);
 
 async function initPopup() {
-  await loadSettings();
-  await loadBlockedSites();
-  setupEventListeners();
-  await setupNavigation();
-  loadSiteSettings(window.currentSite);
-  setupDarkMode();
+  // Initialize settings module
+  if (window.settingsModule && window.settingsModule.init) {
+    // Settings will auto-initialize via DOMContentLoaded
+    console.log("Settings module available");
+  }
 
-  // Listen for language changes
+  await setupNavigation();
+
+  if (window.currentSite) {
+    loadSiteSettings(window.currentSite);
+  }
+
+  setupDarkMode();
   document.addEventListener("languageChanged", handleLanguageChange);
 
   // Smooth popup reveal
@@ -96,25 +73,6 @@ function handleLanguageChange(e) {
       loadSiteSettings(window.currentSite);
     }
   }
-}
-
-function setupEventListeners() {
-  addBtn.addEventListener("click", addCustomSite);
-  siteInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") addCustomSite();
-  });
-  setRedirectBtn.addEventListener("click", setRedirectUrl);
-  redirectInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") setRedirectUrl();
-  });
-  breakToggle.addEventListener("change", toggleBreakTime);
-  pauseToggle.addEventListener("change", togglePauseTime);
-  breakStartTime.addEventListener("change", updateBreakTime);
-  breakEndTime.addEventListener("change", updateBreakTime);
-  pauseStartTime.addEventListener("change", updatePauseTime);
-  pauseEndTime.addEventListener("change", updatePauseTime);
-  adultToggle.addEventListener("change", toggleAdultContent);
-  siteToggle.addEventListener("change", toggleCurrentSite);
 }
 
 async function setupNavigation() {
@@ -192,15 +150,30 @@ function getSiteDisplayName(site) {
 }
 
 async function loadSiteSettings(site) {
-  const data = await chrome.storage.local.get(["defaultSites", "siteOptions"]);
-  const defaultSites = data.defaultSites || {};
-  const siteOptions = data.siteOptions || {};
+  // Use settings module if available
+  if (window.settingsModule && window.settingsModule.loadSiteSettings) {
+    await window.settingsModule.loadSiteSettings(site);
+  } else {
+    // Fallback to direct call
+    const data = await chrome.storage.local.get([
+      "defaultSites",
+      "siteOptions",
+    ]);
+    const defaultSites = data.defaultSites || {};
+    const siteOptions = data.siteOptions || {};
 
-  window.siteOptions = siteOptions;
-  siteToggle.checked = defaultSites[site] !== false;
-  updateSiteOptionsUI(site, siteOptions[site] || {});
+    window.siteOptions = siteOptions;
+
+    const siteToggle = document.getElementById("siteToggle");
+    if (siteToggle) {
+      siteToggle.checked = defaultSites[site] !== false;
+    }
+
+    updateSiteOptionsUI(site, siteOptions[site] || {});
+  }
 }
 
+// Make this function globally accessible
 window.updateSiteOptionsUI = function (site, options) {
   const siteOptionsContainer = document.querySelector(".site-options");
   const config = SITE_OPTIONS_CONFIG[site] || [];
@@ -236,15 +209,6 @@ window.updateSiteOptionsUI = function (site, options) {
   });
 };
 
-async function toggleCurrentSite() {
-  const enabled = siteToggle.checked;
-  const data = await chrome.storage.local.get(["defaultSites"]);
-  const defaultSites = data.defaultSites || {};
-
-  defaultSites[window.currentSite] = enabled;
-  await chrome.storage.local.set({ defaultSites });
-}
-
 async function updateSiteOptions() {
   const data = await chrome.storage.local.get(["siteOptions"]);
   const siteOptions = data.siteOptions || {};
@@ -260,164 +224,14 @@ async function updateSiteOptions() {
   window.siteOptions = siteOptions;
 }
 
-async function loadSettings() {
-  const data = await chrome.storage.local.get([
-    "redirectUrl",
-    "breakEnabled",
-    "pauseEnabled",
-    "breakStartTime",
-    "breakEndTime",
-    "pauseStartTime",
-    "pauseEndTime",
-    "breakDays",
-    "adultEnabled",
-  ]);
-
-  redirectInput.value = data.redirectUrl || "";
-  updateRedirectStatus();
-
-  breakToggle.checked = data.breakEnabled || false;
-  breakSettings.style.display = data.breakEnabled ? "block" : "none";
-  breakStartTime.value = data.breakStartTime || "12:00";
-  breakEndTime.value = data.breakEndTime || "13:00";
-
-  pauseToggle.checked = data.pauseEnabled || false;
-  pauseSettings.style.display = data.pauseEnabled ? "block" : "none";
-  pauseStartTime.value = data.pauseStartTime || "18:00";
-  pauseEndTime.value = data.pauseEndTime || "08:00";
-
-  renderDaySelector(data.breakDays || [1, 2, 3, 4, 5]);
-
-  adultToggle.checked = data.adultEnabled || false;
-  adultSettings.style.display = data.adultEnabled ? "block" : "none";
-}
-
-function renderDaySelector(selectedDays) {
-  breakDays.innerHTML = "";
-  DAYS.forEach((day) => {
-    const button = document.createElement("button");
-    button.className = `day-btn ${
-      selectedDays.includes(day.id) ? "active" : ""
-    }`;
-
-    button.textContent = day.label;
-
-    button.addEventListener("click", () => toggleDay(day.id, button));
-    breakDays.appendChild(button);
-  });
-}
-
-async function toggleDay(dayId, button) {
-  const data = await chrome.storage.local.get(["breakDays"]);
-  const breakDays = data.breakDays || [];
-  if (breakDays.includes(dayId)) {
-    const index = breakDays.indexOf(dayId);
-    breakDays.splice(index, 1);
-    button.classList.remove("active");
-  } else {
-    breakDays.push(dayId);
-    button.classList.add("active");
-  }
-  await chrome.storage.local.set({ breakDays });
-}
-
-async function loadBlockedSites() {
-  const data = await chrome.storage.local.get(["blockedSites"]);
-  siteList.innerHTML = "";
-  (data.blockedSites || []).forEach(addSiteToUI);
-}
-
-function addCustomSite() {
-  const site = siteInput.value.trim();
-  if (!site) return;
-  chrome.storage.local.get(["blockedSites"], (data) => {
-    const list = data.blockedSites || [];
-    if (!list.includes(site)) {
-      list.push(site);
-      chrome.storage.local.set({ blockedSites: list });
-      addSiteToUI(site);
-    }
-  });
-  siteInput.value = "";
-}
-
-function addSiteToUI(site) {
-  const li = document.createElement("li");
-  const siteText = document.createElement("span");
-  siteText.className = "site-text";
-  siteText.textContent = site;
-  const removeBtn = document.createElement("span");
-  removeBtn.textContent = "X";
-  removeBtn.className = "removeBtn";
-  removeBtn.addEventListener("click", () => removeSite(site, li));
-  li.appendChild(siteText);
-  li.appendChild(removeBtn);
-  siteList.appendChild(li);
-}
-
-function removeSite(site, li) {
-  chrome.storage.local.get(["blockedSites"], (data) => {
-    const list = (data.blockedSites || []).filter((s) => s !== site);
-    chrome.storage.local.set({ blockedSites: list });
-  });
-  li.remove();
-}
-
-async function setRedirectUrl() {
-  const url = redirectInput.value.trim();
-  await chrome.storage.local.set({ redirectUrl: url });
-  updateRedirectStatus();
-}
-
-async function toggleBreakTime() {
-  const enabled = breakToggle.checked;
-  await chrome.storage.local.set({ breakEnabled: enabled });
-  breakSettings.style.display = enabled ? "block" : "none";
-}
-
-async function togglePauseTime() {
-  const enabled = pauseToggle.checked;
-  await chrome.storage.local.set({ pauseEnabled: enabled });
-  pauseSettings.style.display = enabled ? "block" : "none";
-}
-
-async function toggleAdultContent() {
-  const enabled = adultToggle.checked;
-  await chrome.storage.local.set({ adultEnabled: enabled });
-  await chrome.runtime.sendMessage({ action: "updateRules" });
-  adultSettings.style.display = enabled ? "block" : "none";
-}
-
-async function updateBreakTime() {
-  await chrome.storage.local.set({
-    breakStartTime: breakStartTime.value,
-    breakEndTime: breakEndTime.value,
-  });
-}
-
-async function updatePauseTime() {
-  await chrome.storage.local.set({
-    pauseStartTime: pauseStartTime.value,
-    pauseEndTime: pauseEndTime.value,
-  });
-}
-
 function updateCurrentSiteDisplay() {
   const siteKey = window.currentSite.split(".")[0];
-  currentSiteName.textContent = getSiteDisplayName(window.currentSite);
+  if (currentSiteName) {
+    currentSiteName.textContent = getSiteDisplayName(window.currentSite);
+  }
 }
 
-function updateRedirectStatus() {
-  chrome.storage.local.get(["redirectUrl"], (data) => {
-    if (data.redirectUrl) {
-      currentRedirect.textContent =
-        "Currently redirecting to: " + data.redirectUrl;
-    } else {
-      currentRedirect.textContent = "No redirect URL set";
-    }
-  });
-}
-
+// Dark mode handling
 function setupDarkMode() {
   chrome.storage.local.get(["darkMode", "theme"], (data) => {
     const isDarkMode = data.darkMode || data.theme === "dark";
