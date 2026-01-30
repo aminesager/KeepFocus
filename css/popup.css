@@ -157,111 +157,6 @@ body.dark-mode .dark-btn img {
   margin-left: 0;
 }
 
-/* Language Dropdown Improvements */
-.lang-dropdown {
-  position: relative;
-  min-width: 80px;
-  font-size: 14px;
-  user-select: none;
-  margin-left: 0;
-}
-
-/* Selected area (closed dropdown) */
-.lang-selected {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-  justify-content: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-}
-
-.lang-selected:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.dropdown-arrow {
-  font-size: 10px;
-  margin-left: 4px;
-  opacity: 0.7;
-  transition: transform 0.2s;
-}
-
-.lang-dropdown.active .dropdown-arrow {
-  transform: rotate(180deg);
-}
-
-.lang-selected img {
-  width: 20px;
-  height: 15px;
-  border-radius: 2px;
-}
-
-/* Dropdown list container */
-.lang-options {
-  position: absolute;
-  top: calc(100% + 4px);
-  right: 0;
-  min-width: 140px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  display: none; /* Default hidden */
-  z-index: 1000;
-  max-height: 240px;
-  overflow-y: auto;
-  border: 1px solid #dfe3ea;
-  animation: dropdownFade 0.12s ease-out;
-}
-
-.dark-mode .lang-options {
-  background: #22232b;
-  border-color: #30323a;
-}
-
-/* .lang-dropdown.active .lang-options {
-  display: block;
-} */
-
-.lang-options img {
-  margin-left: 0;
-}
-
-/* Individual option */
-.lang-option {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  cursor: pointer;
-  transition: background 0.15s;
-  color: #333;
-}
-
-.dark-mode .lang-option {
-  color: #e5e5e5;
-}
-
-.lang-option:hover {
-  background: #f2f3f7;
-}
-
-.dark-mode .lang-option:hover {
-  background: #2e3038;
-}
-
-.lang-option img {
-  width: 20px;
-  height: 15px;
-  border-radius: 2px;
-}
-
 /* Dark mode button specific */
 .dark-btn {
   min-width: 44px;
@@ -290,26 +185,10 @@ body.dark-mode .dark-btn img {
     font-size: 16px;
   }
 
-  #selectedLang {
-    display: none;
-  }
-
   .lang-selected {
     padding: 8px;
     min-width: 44px;
     justify-content: center;
-  }
-}
-
-/* Animation */
-@keyframes dropdownFade {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -441,25 +320,6 @@ body.dark-mode {
   --scrollbar-bg: #22232b;
   --scrollbar-thumb: #7c82ff;
   --scrollbar-thumb-hover: #6366f1;
-}
-
-/* Scrollbar styling inside dropdown */
-.lang-options::-webkit-scrollbar {
-  width: 8px;
-}
-
-.lang-options::-webkit-scrollbar-track {
-  background: var(--scrollbar-bg);
-  border-radius: 10px;
-}
-
-.lang-options::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb);
-  border-radius: 10px;
-}
-
-.lang-options::-webkit-scrollbar-thumb:hover {
-  background-color: var(--scrollbar-thumb-hover);
 }
 /* Content */
 .content-area {
