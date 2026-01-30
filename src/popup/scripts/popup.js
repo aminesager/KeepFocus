@@ -43,7 +43,7 @@ function setupDarkMode() {
       document.body.classList.add("dark-mode");
       const icon = document.getElementById("darkModeIcon");
       if (icon) {
-        icon.src = "icons/sun.svg";
+        icon.src = "src/assets/icons/sun.svg";
       }
     }
   });
@@ -61,7 +61,9 @@ async function toggleDarkMode() {
 
   const icon = document.getElementById("darkModeIcon");
   if (icon) {
-    icon.src = !isDarkMode ? "icons/sun.svg" : "icons/moon.svg";
+    icon.src = !isDarkMode
+      ? "src/assets/icons/sun.svg"
+      : "src/assets/icons/moon.svg";
   }
 }
 
