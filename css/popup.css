@@ -8,7 +8,9 @@ body {
   color: #1a1a1a;
   opacity: 0;
   transform: translateY(-10px);
-  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.4s ease-out;
 }
 
 body.popup-loaded {
@@ -210,7 +212,7 @@ body.dark-mode .dark-btn img {
   background: white;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  display: none;
+  display: none; /* Default hidden */
   z-index: 1000;
   max-height: 240px;
   overflow-y: auto;
@@ -223,9 +225,9 @@ body.dark-mode .dark-btn img {
   border-color: #30323a;
 }
 
-.lang-dropdown.active .lang-options {
+/* .lang-dropdown.active .lang-options {
   display: block;
-}
+} */
 
 .lang-options img {
   margin-left: 0;
@@ -398,7 +400,9 @@ body:not(.dark-mode) .sun-icon {
   padding: 8px 6px;
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
   flex: 1;
   min-width: 0;
 }
@@ -539,7 +543,9 @@ input {
   border-radius: 8px;
   font-size: 14px;
   background: #fafbff;
-  transition: border 0.2s, box-shadow 0.2s;
+  transition:
+    border 0.2s,
+    box-shadow 0.2s;
 }
 
 input:focus {
@@ -558,7 +564,9 @@ button {
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
-  transition: background 0.2s, transform 0.1s;
+  transition:
+    background 0.2s,
+    transform 0.1s;
 }
 
 button:hover {
@@ -692,7 +700,9 @@ input:checked + .slider:before {
   border: 1px solid #dfe3ea;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .day-btn.active {

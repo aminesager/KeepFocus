@@ -1,31 +1,6 @@
-const dropdown = document.getElementById("langDropdown");
-const langOptionsBox = document.getElementById("langOptions");
-const selectedFlag = document.getElementById("selectedFlag");
-const selectedLang = document.getElementById("selectedLang");
+// popup.js - Main popup logic WITHOUT language dropdown code
 
-dropdown.addEventListener("click", () => {
-  langOptionsBox.style.display =
-    langOptionsBox.style.display === "block" ? "none" : "block";
-});
-
-document.querySelectorAll(".lang-option").forEach((option) => {
-  option.addEventListener("click", (event) => {
-    event.stopPropagation();
-
-    selectedFlag.src = option.dataset.flag;
-    selectedLang.textContent = option.dataset.label;
-
-    langOptionsBox.style.display = "none";
-  });
-});
-
-document.addEventListener("click", (e) => {
-  if (!dropdown.contains(e.target)) {
-    langOptionsBox.style.display = "none";
-  }
-});
-
-// Site-specific option configurations (keep original structure)
+// Site-specific option configurations
 const SITE_OPTIONS_CONFIG = {
   "facebook.com": [
     { id: "hideFeed", label: "Hide Feed" },
@@ -58,7 +33,7 @@ const SITE_OPTIONS_CONFIG = {
   ],
 };
 
-// Original variables from your code
+// DOM elements
 const siteInput = document.getElementById("siteInput");
 const addBtn = document.getElementById("addBtn");
 const siteList = document.getElementById("siteList");
@@ -81,7 +56,6 @@ const currentSiteName = document.getElementById("currentSiteName");
 const siteSettings = document.getElementById("siteSettings");
 const generalSettings = document.getElementById("generalSettings");
 const settingsNav = document.getElementById("settingsNav");
-const navItems = document.querySelectorAll(".nav-item:not(.settings-nav)");
 
 const DAYS = [
   { id: 1, label: "Mon" },
@@ -118,7 +92,6 @@ async function initPopup() {
 
 function handleLanguageChange(e) {
   if (e.detail && e.detail.language) {
-    // Update site options UI with new language
     if (window.currentSite) {
       loadSiteSettings(window.currentSite);
     }
@@ -141,60 +114,47 @@ function setupEventListeners() {
   pauseStartTime.addEventListener("change", updatePauseTime);
   pauseEndTime.addEventListener("change", updatePauseTime);
   adultToggle.addEventListener("change", toggleAdultContent);
-
-  // Site toggle
   siteToggle.addEventListener("change", toggleCurrentSite);
 }
 
 async function setupNavigation() {
-  // Load saved navigation state
   const data = await chrome.storage.local.get(["selectedNav"]);
   const savedNav = data.selectedNav || "facebook.com";
 
-  // FIRST: Remove ALL active classes from everything
   document.querySelectorAll(".nav-item").forEach((nav) => {
     nav.classList.remove("active");
   });
 
-  // Set up navigation items
   document.querySelectorAll(".nav-item:not(.settings-nav)").forEach((item) => {
     item.addEventListener("click", async () => {
-      // Update active state
       document.querySelectorAll(".nav-item").forEach((nav) => {
         nav.classList.remove("active");
       });
       item.classList.add("active");
 
-      // Show site settings
       siteSettings.style.display = "block";
       generalSettings.style.display = "none";
 
-      // Update current site
       window.currentSite = item.getAttribute("data-site");
       updateCurrentSiteDisplay();
 
-      // Add translation update
       const siteKey = window.currentSite.split(".")[0];
       if (typeof updateCurrentSiteName === "function") {
         updateCurrentSiteName(siteKey);
       }
 
-      // Save navigation state
       await chrome.storage.local.set({
         selectedNav: window.currentSite,
       });
 
-      // Load site-specific settings
       loadSiteSettings(window.currentSite);
     });
 
-    // Restore saved active state AFTER setting up listeners
     if (item.getAttribute("data-site") === savedNav) {
       item.classList.add("active");
       window.currentSite = savedNav;
       updateCurrentSiteDisplay();
 
-      // Show site settings if not settings nav
       if (savedNav !== "settings") {
         siteSettings.style.display = "block";
         generalSettings.style.display = "none";
@@ -202,23 +162,18 @@ async function setupNavigation() {
     }
   });
 
-  // Settings navigation
   settingsNav.addEventListener("click", async () => {
-    // Update active state
     document.querySelectorAll(".nav-item").forEach((nav) => {
       nav.classList.remove("active");
     });
     settingsNav.classList.add("active");
 
-    // Show general settings
     siteSettings.style.display = "none";
     generalSettings.style.display = "block";
 
-    // Save navigation state
     await chrome.storage.local.set({ selectedNav: "settings" });
   });
 
-  // Restore settings nav if it was selected
   if (savedNav === "settings") {
     settingsNav.classList.add("active");
     siteSettings.style.display = "none";
@@ -241,17 +196,11 @@ async function loadSiteSettings(site) {
   const defaultSites = data.defaultSites || {};
   const siteOptions = data.siteOptions || {};
 
-  // Store site options globally
   window.siteOptions = siteOptions;
-
-  // Update site toggle
   siteToggle.checked = defaultSites[site] !== false;
-
-  // Update site-specific options UI based on site
   updateSiteOptionsUI(site, siteOptions[site] || {});
 }
 
-// Make this function globally accessible
 window.updateSiteOptionsUI = function (site, options) {
   const siteOptionsContainer = document.querySelector(".site-options");
   const config = SITE_OPTIONS_CONFIG[site] || [];
@@ -262,7 +211,6 @@ window.updateSiteOptionsUI = function (site, options) {
     const div = document.createElement("div");
     div.className = "option-item";
 
-    // Get translated label if translation function exists
     let label = optionConfig.label;
     if (typeof getTranslatedSiteOption === "function") {
       const translatedLabel = getTranslatedSiteOption(optionConfig.id);
@@ -283,7 +231,6 @@ window.updateSiteOptionsUI = function (site, options) {
     siteOptionsContainer.appendChild(div);
   });
 
-  // Re-attach event listeners
   document.querySelectorAll(".site-option").forEach((option) => {
     option.addEventListener("change", updateSiteOptions);
   });
@@ -302,18 +249,14 @@ async function updateSiteOptions() {
   const data = await chrome.storage.local.get(["siteOptions"]);
   const siteOptions = data.siteOptions || {};
 
-  // Get current options
   const options = {};
   document.querySelectorAll(".site-option").forEach((option) => {
     const optionName = option.getAttribute("data-option");
     options[optionName] = option.checked;
   });
 
-  // Save to storage
   siteOptions[window.currentSite] = options;
   await chrome.storage.local.set({ siteOptions });
-
-  // Update global reference
   window.siteOptions = siteOptions;
 }
 
@@ -330,26 +273,21 @@ async function loadSettings() {
     "adultEnabled",
   ]);
 
-  // Redirect URL
   redirectInput.value = data.redirectUrl || "";
   updateRedirectStatus();
 
-  // Break time settings
   breakToggle.checked = data.breakEnabled || false;
   breakSettings.style.display = data.breakEnabled ? "block" : "none";
   breakStartTime.value = data.breakStartTime || "12:00";
   breakEndTime.value = data.breakEndTime || "13:00";
 
-  // Pause time settings
   pauseToggle.checked = data.pauseEnabled || false;
   pauseSettings.style.display = data.pauseEnabled ? "block" : "none";
   pauseStartTime.value = data.pauseStartTime || "18:00";
   pauseEndTime.value = data.pauseEndTime || "08:00";
 
-  // Break days
   renderDaySelector(data.breakDays || [1, 2, 3, 4, 5]);
 
-  // adult content settings
   adultToggle.checked = data.adultEnabled || false;
   adultSettings.style.display = data.adultEnabled ? "block" : "none";
 }
@@ -445,12 +383,9 @@ async function togglePauseTime() {
 
 async function toggleAdultContent() {
   const enabled = adultToggle.checked;
-  await chrome.storage.local.set({ adultEnabled: enabled }); // <-- This is correct
+  await chrome.storage.local.set({ adultEnabled: enabled });
   await chrome.runtime.sendMessage({ action: "updateRules" });
   adultSettings.style.display = enabled ? "block" : "none";
-  console.log(
-    "Adult content blocking is now " + (enabled ? "enabled" : "disabled")
-  );
 }
 
 async function updateBreakTime() {
@@ -483,7 +418,6 @@ function updateRedirectStatus() {
   });
 }
 
-// Dark mode handling
 function setupDarkMode() {
   chrome.storage.local.get(["darkMode", "theme"], (data) => {
     const isDarkMode = data.darkMode || data.theme === "dark";
@@ -512,6 +446,7 @@ async function toggleDarkMode() {
   }
 }
 
+// Initialize dark mode toggle
 document
   .getElementById("darkModeToggle")
   .addEventListener("click", toggleDarkMode);
