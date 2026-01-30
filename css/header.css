@@ -1,0 +1,153 @@
+/* header.css - Header and top bar styles */
+
+/* Header Layout */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 100;
+}
+
+.dark-mode .header {
+  background: linear-gradient(135deg, #4338ca, #6d28d9);
+}
+
+/* Left side: Logo & Title */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.logo-container:hover {
+  transform: translateY(-1px);
+}
+
+.logo {
+  margin-bottom: 5px;
+  margin-right: 1px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* Right side: Actions */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Action Buttons (Donate, Dark Mode) */
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+.action-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-mode .action-btn img {
+  filter: invert(1);
+}
+
+/* Donate button specific styling */
+.donate-btn {
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+}
+
+.donate-btn:hover {
+  background: linear-gradient(135deg, #ff5252, #ff7b7b);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+}
+
+/* Dark Mode Toggle Button */
+.dark-btn {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  padding: 8px 12px;
+  border: none;
+  gap: 6px;
+  margin-left: 0;
+  min-width: 44px;
+}
+
+/* Header responsive adjustments */
+@media (max-width: 480px) {
+  .header {
+    padding: 14px 16px;
+  }
+
+  .action-text {
+    display: none;
+  }
+
+  .action-btn {
+    padding: 8px;
+  }
+
+  .logo-container {
+    gap: 8px;
+  }
+
+  .header h2 {
+    font-size: 16px;
+  }
+}

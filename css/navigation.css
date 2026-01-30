@@ -1,0 +1,66 @@
+/* navigation.css - Navigation bar styles */
+
+/* Navigation Bar */
+.nav-bar {
+  display: flex;
+  flex-wrap: wrap;
+  background: #ffffff;
+  border-bottom: 1px solid #e6e8f0;
+  padding: 8px 10px;
+  gap: 4px;
+}
+
+.dark-mode .nav-bar {
+  background: #22232b !important;
+  border-color: #30323a !important;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  flex: 1;
+  min-width: 0;
+}
+
+.nav-item:hover {
+  background: #9b94ad;
+}
+
+.dark-mode .nav-item {
+  color: #d9d9d9 !important;
+}
+
+.nav-item.active {
+  background: #6366f1;
+  color: white;
+}
+
+.dark-mode .nav-item.active {
+  background: #6366f1 !important;
+}
+
+.nav-icon {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.dark-mode .nav-label {
+  color: #e0e0e0 !important;
+}
