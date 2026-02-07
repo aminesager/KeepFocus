@@ -71,3 +71,21 @@ async function toggleDarkMode() {
 document
   .getElementById("darkModeToggle")
   .addEventListener("click", toggleDarkMode);
+
+/////////////////////////////////////
+
+// Log every change as it happens
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  if (namespace === "local") {
+    console.log("Storage changes:", changes);
+  }
+});
+
+// Optionally, log the full storage periodically (or on demand)
+async function logFullStorage() {
+  const allData = await chrome.storage.local.get(null); // null gets everything
+  console.log("Full storage:", allData);
+}
+
+// Example: log full storage every 5 seconds
+setInterval(logFullStorage, 5000);

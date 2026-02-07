@@ -4,15 +4,12 @@ const DEFAULT_SITES = [
   "youtube.com",
   "twitter.com",
   "x.com",
-  "tiktok.com",
 ];
-
-let BAD_SITES = [];
 
 chrome.storage.local.get(["BAD_SITES"], (data) => {
   BAD_SITES = data.BAD_SITES || [];
   console.log("Loaded:", BAD_SITES);
-  updateDNRRules(); // Call your function here
+  updateDNRRules();
 });
 
 chrome.runtime.onInstalled.addListener(async () => {
@@ -46,11 +43,7 @@ async function initializeDefaultSettings() {
       "defaultSites",
       "adultEnabled",
     ]);
-    // Initialize adult content blocking (disabled by default)
-    if (data.adultEnabled === undefined) {
-      await chrome.storage.local.set({ adultEnabled: false });
-      console.log("Adult content blocking disabled by default");
-    }
+
     // Initialize default sites
     if (!data.defaultSites) {
       const defaultSitesState = {};
@@ -114,7 +107,7 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
       "breakDays",
     ];
     const shouldUpdateRules = Object.keys(changes).some((key) =>
-      relevantKeys.includes(key)
+      relevantKeys.includes(key),
     );
     if (shouldUpdateRules) {
       console.log("Settings changed that affect blocking rules, updating...");
@@ -146,6 +139,7 @@ function isSupportedSite(url) {
   return supportedDomains.some((domain) => url.includes(domain));
 }
 
+// to be refactored separation of concerns
 async function isBreakTime() {
   try {
     const data = await chrome.storage.local.get([
@@ -155,7 +149,6 @@ async function isBreakTime() {
       "breakDays",
     ]);
     if (!data.breakEnabled) {
-      console.log("Break not enabled");
       return false;
     }
     const now = new Date();
@@ -218,109 +211,111 @@ function createUrlFilter(domain) {
   return `||${cleanDomain}^`;
 }
 
-function generateRuleId(index) {
-  return index + 1;
-}
-
 async function updateDNRRules() {
   try {
-    console.log("=== Starting DNR Rules Update ===");
-    // Get all necessary settings
+    // Fetch user settings from Chrome's local storage
     const data = await chrome.storage.local.get([
       "blockedSites",
       "defaultSites",
       "redirectUrl",
       "adultEnabled",
     ]);
-    console.log(
-      "adultEnabled from storage:",
-      data.adultEnabled,
-      typeof data.adultEnabled
-    );
-    // Check current statuses
+
+    // Check if scheduled break or pause time is currently active
     const breakActive = await isBreakTime();
     const pauseActive = await isPauseTime();
+    // Check if adult content blocking is enabled
     const adultBlockingActive = data.adultEnabled === true;
 
-    console.log("Blocked sites:", data.blockedSites);
-    console.log("Default sites:", data.defaultSites);
-    console.log("Redirect URL:", data.redirectUrl);
-    // Get existing rules and remove them
+    // Get all existing DNR rules created by this extension
     const existingRules = await chrome.declarativeNetRequest.getDynamicRules();
+    // Extract just the IDs of existing rules for removal
     const existingRuleIds = existingRules.map((r) => r.id);
-    console.log("Existing rule IDs to remove:", existingRuleIds);
-    if (existingRuleIds.length > 0) {
-      await chrome.declarativeNetRequest.updateDynamicRules({
-        removeRuleIds: existingRuleIds,
-      });
-      console.log("Removed existing rules");
-      await new Promise((resolve) => setTimeout(resolve, 100));
-    }
-    // If break or pause is active, don't block anything
+
+    // If break or pause is active, remove any existing blocking rules and exit
     if (pauseActive || breakActive) {
-      console.log("No blocking rules added (pause or break active)");
-      return;
+      if (existingRuleIds.length > 0) {
+        // Remove all existing blocking rules during break/pause periods
+        await chrome.declarativeNetRequest.updateDynamicRules({
+          removeRuleIds: existingRuleIds,
+        });
+      }
+      return; // No blocking during scheduled breaks
     }
-    // Collect sites to block
+
+    // Get custom sites manually added by user (ensure it's an array)
     const customSites = Array.isArray(data.blockedSites)
       ? data.blockedSites
       : [];
+    // Get default sites (Facebook, YouTube, etc.) and filter only enabled ones
     const defaultSites = data.defaultSites || {};
     const enabledDefaultSites = Object.keys(defaultSites).filter(
-      (site) => defaultSites[site] === true
+      (site) => defaultSites[site] === true,
     );
-    // Start with custom and default sites
+
+    // Combine custom and enabled default sites, remove any duplicates
     let allSites = [...new Set([...customSites, ...enabledDefaultSites])];
-    // Add adult sites if adult blocking is enabled
+
+    // If adult content blocking is enabled, add adult sites to the block list
     if (adultBlockingActive) {
       allSites = [...new Set([...allSites, ...BAD_SITES])];
-      console.log("Adult blocking active, added adult sites:", BAD_SITES);
     }
-    console.log("All sites to block:", allSites);
+
+    // If no sites need to be blocked after all filtering
     if (allSites.length === 0) {
-      console.log("No sites to block");
-      return;
+      // Remove any existing rules since nothing should be blocked now
+      if (existingRuleIds.length > 0) {
+        await chrome.declarativeNetRequest.updateDynamicRules({
+          removeRuleIds: existingRuleIds,
+        });
+      }
+      return; // Exit early - nothing to block
     }
-    // Create new rules
+
+    // Array to hold new DNR rule objects we'll create
     const newRules = [];
+    // Get redirect URL (if set) and trim whitespace
     const redirectUrl = data.redirectUrl?.trim();
+
+    // Loop through each site that needs to be blocked/redirected
     allSites.forEach((site, index) => {
-      const ruleId = generateRuleId(index);
+      // Generate sequential rule ID starting from 1
+      const ruleId = index + 1;
+      // Convert domain to DNR URL filter pattern (e.g., "facebook.com" → "||facebook.com^")
       const urlFilter = createUrlFilter(site);
-      console.log(`Creating rule ${ruleId} for: ${site} -> ${urlFilter}`);
+
+      // If redirect URL is provided and not empty
       if (redirectUrl && redirectUrl.length > 0) {
         try {
           let finalUrl = redirectUrl;
-          // Add https:// if not present
+          // Add https:// prefix if URL doesn't have protocol
           if (
             !redirectUrl.startsWith("http://") &&
             !redirectUrl.startsWith("https://")
           ) {
             finalUrl = "https://" + redirectUrl;
           }
-          // Validate URL
+          // Validate URL format (throws error if invalid)
           new URL(finalUrl);
-          // Create redirect rule
+          // Create redirect rule - sends user to productivity site instead
           newRules.push({
-            id: ruleId,
-            priority: 1,
+            id: ruleId, // Unique numeric identifier
+            priority: 1, // Rule priority (higher wins)
             action: {
-              type: "redirect",
-              redirect: { url: finalUrl },
+              type: "redirect", // Action type: redirect to another URL
+              redirect: { url: finalUrl }, // Destination URL
             },
             condition: {
-              urlFilter: urlFilter,
-              resourceTypes: ["main_frame"],
+              urlFilter: urlFilter, // Pattern to match
+              resourceTypes: ["main_frame"], // Only block top-level page loads
             },
           });
-          console.log(`Created redirect rule to: ${finalUrl}`);
         } catch (error) {
-          console.error("Invalid redirect URL, using block instead:", error);
-          // Fallback to block rule
+          // If redirect URL is invalid, fall back to blocking instead
           newRules.push({
             id: ruleId,
             priority: 1,
-            action: { type: "block" },
+            action: { type: "block" }, // Block the site completely
             condition: {
               urlFilter: urlFilter,
               resourceTypes: ["main_frame"],
@@ -328,11 +323,11 @@ async function updateDNRRules() {
           });
         }
       } else {
-        // Create block rule (no redirect URL)
+        // No redirect URL set - create simple block rule
         newRules.push({
           id: ruleId,
           priority: 1,
-          action: { type: "block" },
+          action: { type: "block" }, // Block the site
           condition: {
             urlFilter: urlFilter,
             resourceTypes: ["main_frame"],
@@ -340,28 +335,15 @@ async function updateDNRRules() {
         });
       }
     });
-    // Add new rules if any exist
-    if (newRules.length > 0) {
-      console.log(`Adding ${newRules.length} rules`);
-      await chrome.declarativeNetRequest.updateDynamicRules({
-        addRules: newRules,
-      });
-      console.log(`Successfully added ${newRules.length} blocking rules`);
-      // Verify rules were added
-      const verifyRules = await chrome.declarativeNetRequest.getDynamicRules();
-      console.log("Verified rules count:", verifyRules.length);
-      if (verifyRules.length === 0) {
-        console.error(
-          "ERROR: No rules were added despite having sites to block!"
-        );
-      } else {
-        console.log("Rules successfully applied");
-      }
-    } else {
-      console.log("No rules to add");
-    }
-    console.log("=== DNR Rules Update Complete ===");
+
+    // ATOMIC OPERATION: Remove old rules and add new ones in single API call
+    // This prevents race conditions and ensures consistent rule state
+    await chrome.declarativeNetRequest.updateDynamicRules({
+      removeRuleIds: existingRuleIds, // IDs of rules to remove
+      addRules: newRules, // New rules to add
+    });
   } catch (error) {
+    // Catch and log any errors in the rule update process
     console.error("Error in updateDNRRules:", error);
   }
 }
