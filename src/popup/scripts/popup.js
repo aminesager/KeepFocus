@@ -62,8 +62,8 @@ async function toggleDarkMode() {
   const icon = document.getElementById("darkModeIcon");
   if (icon) {
     icon.src = !isDarkMode
-      ? "src/assets/icons/sun.svg"
-      : "src/assets/icons/moon.svg";
+      ? "src/assets/icons/moon.svg"
+      : "src/assets/icons/sun.svg";
   }
 }
 
