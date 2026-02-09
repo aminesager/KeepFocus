@@ -1,22 +1,13 @@
 importScripts("schedule.js");
 importScripts("bg-utils.js");
 importScripts("store-manager.js");
+importScripts("adult-filter.js");
 
 chrome.runtime.onInstalled.addListener(async () => {
   console.log("Extension installed/updated");
   await initializeDefaultSettings();
   await updateDNRRules();
 });
-
-async function isAdultBlockingActive() {
-  try {
-    const data = await chrome.storage.local.get(["adultEnabled"]);
-    return data.adultEnabled === true;
-  } catch (error) {
-    console.error("Error checking adult blocking:", error);
-    return false;
-  }
-}
 
 chrome.runtime.onStartup.addListener(() => {
   console.log("Browser started, updating rules");
@@ -207,5 +198,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-// Initial rule update
 updateDNRRules();

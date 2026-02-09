@@ -91,12 +91,6 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
   }
 });
 
-chrome.storage.local.get(["BAD_SITES"], (data) => {
-  BAD_SITES = data.BAD_SITES || [];
-  console.log("Loaded:", BAD_SITES);
-  updateDNRRules();
-});
-
 const DEFAULT_SITES = [
   "facebook.com",
   "instagram.com",
