@@ -1,3 +1,6 @@
+importScripts("schedule.js");
+importScripts("bg-utils.js");
+
 const DEFAULT_SITES = [
   "facebook.com",
   "instagram.com",
@@ -127,28 +130,6 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     }
   }
 });
-
-function isSupportedSite(url) {
-  const supportedDomains = [
-    "facebook.com",
-    "youtube.com",
-    "instagram.com",
-    "twitter.com",
-    "x.com",
-  ];
-  return supportedDomains.some((domain) => url.includes(domain));
-}
-
-importScripts("schedule.js");
-
-function createUrlFilter(domain) {
-  let cleanDomain = domain
-    .trim()
-    .replace(/^https?:\/\//, "")
-    .replace(/^www\./, "")
-    .replace(/\/$/, "");
-  return `||${cleanDomain}^`;
-}
 
 async function updateDNRRules() {
   try {
