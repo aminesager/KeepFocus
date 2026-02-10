@@ -91,10 +91,4 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
   }
 });
 
-const DEFAULT_SITES = [
-  "facebook.com",
-  "instagram.com",
-  "youtube.com",
-  "twitter.com",
-  "x.com",
-];
+const DEFAULT_SITES = ["facebook.com", "instagram.com", "youtube.com", "x.com"];

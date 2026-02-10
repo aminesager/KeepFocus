@@ -42,7 +42,7 @@ YouTube Content Filtering
 
 Instagram Content Filtering
 
-Twitter/X Content Filtering
+X Content Filtering
 
 Global Storage Sync
 

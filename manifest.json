@@ -21,7 +21,6 @@
     "https://www.youtube.com/*",
     "https://instagram.com/*",
     "https://www.instagram.com/*",
-    "https://twitter.com/*",
     "https://x.com/*"
   ],
 
@@ -44,7 +43,6 @@
         "*://*.facebook.com/*",
         "*://*.youtube.com/*",
         "*://*.instagram.com/*",
-        "*://*.twitter.com/*",
         "*://*.x.com/*"
       ],
       "js": ["src/content/content.js"],

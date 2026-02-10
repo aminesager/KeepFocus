@@ -7,18 +7,15 @@ function createUrlFilter(domain) {
   return `||${cleanDomain}^`;
 }
 
-
 function isSupportedSite(url) {
   const supportedDomains = [
     "facebook.com",
     "youtube.com",
     "instagram.com",
-    "twitter.com",
     "x.com",
   ];
   return supportedDomains.some((domain) => url.includes(domain));
 }
-
 
 function timeToMinutes(timeStr) {
   if (!timeStr) return 0;
