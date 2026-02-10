@@ -1,6 +1,3 @@
-// settings.js - All settings management logic
-
-// DOM Elements for settings
 let siteInput, addBtn, siteList, redirectInput, setRedirectBtn;
 let currentRedirect, breakToggle, pauseToggle, adultToggle;
 let breakSettings, pauseSettings, adultSettings;
@@ -17,9 +14,7 @@ const DAYS = [
   { id: 0, label: "Sun" },
 ];
 
-// Initialize settings module
 function initSettings() {
-  // Get DOM elements
   siteInput = document.getElementById("siteInput");
   addBtn = document.getElementById("addBtn");
   siteList = document.getElementById("siteList");
@@ -39,17 +34,11 @@ function initSettings() {
   breakDays = document.getElementById("breakDays");
   siteToggle = document.getElementById("siteToggle");
 
-  // Setup event listeners
   setupSettingsEventListeners();
-
-  // Load initial settings
   loadSettings();
   loadBlockedSites();
-
-  console.log("Settings module initialized");
 }
 
-// Setup all event listeners for settings
 function setupSettingsEventListeners() {
   if (addBtn) addBtn.addEventListener("click", addCustomSite);
   if (siteInput)
@@ -77,7 +66,6 @@ function setupSettingsEventListeners() {
   if (siteToggle) siteToggle.addEventListener("change", toggleCurrentSite);
 }
 
-// Load all settings from storage
 async function loadSettings() {
   const data = await chrome.storage.local.get([
     "redirectUrl",
@@ -91,11 +79,9 @@ async function loadSettings() {
     "adultEnabled",
   ]);
 
-  // Redirect URL
   if (redirectInput) redirectInput.value = data.redirectUrl || "";
   updateRedirectStatus();
 
-  // Break time settings
   if (breakToggle) {
     breakToggle.checked = data.breakEnabled || false;
     if (breakSettings)
@@ -104,7 +90,6 @@ async function loadSettings() {
   if (breakStartTime) breakStartTime.value = data.breakStartTime || "12:00";
   if (breakEndTime) breakEndTime.value = data.breakEndTime || "13:00";
 
-  // Pause time settings
   if (pauseToggle) {
     pauseToggle.checked = data.pauseEnabled || false;
     if (pauseSettings)
@@ -113,10 +98,8 @@ async function loadSettings() {
   if (pauseStartTime) pauseStartTime.value = data.pauseStartTime || "18:00";
   if (pauseEndTime) pauseEndTime.value = data.pauseEndTime || "08:00";
 
-  // Break days
   renderDaySelector(data.breakDays || [1, 2, 3, 4, 5]);
 
-  // Adult content settings
   if (adultToggle) {
     adultToggle.checked = data.adultEnabled || false;
     if (adultSettings)
@@ -124,31 +107,24 @@ async function loadSettings() {
   }
 }
 
-// Render day selector for break time
 function renderDaySelector(selectedDays) {
   if (!breakDays) return;
 
   breakDays.innerHTML = "";
   DAYS.forEach((day) => {
     const button = document.createElement("button");
-    button.className = `day-btn ${
-      selectedDays.includes(day.id) ? "active" : ""
-    }`;
-
+    button.className = `day-btn ${selectedDays.includes(day.id) ? "active" : ""}`;
     button.textContent = day.label;
-
     button.addEventListener("click", () => toggleDay(day.id, button));
     breakDays.appendChild(button);
   });
 }
 
-// Toggle individual day for break time
 async function toggleDay(dayId, button) {
   const data = await chrome.storage.local.get(["breakDays"]);
   const breakDays = data.breakDays || [];
   if (breakDays.includes(dayId)) {
-    const index = breakDays.indexOf(dayId);
-    breakDays.splice(index, 1);
+    breakDays.splice(breakDays.indexOf(dayId), 1);
     button.classList.remove("active");
   } else {
     breakDays.push(dayId);
@@ -157,7 +133,6 @@ async function toggleDay(dayId, button) {
   await chrome.storage.local.set({ breakDays });
 }
 
-// Load blocked sites from storage
 async function loadBlockedSites() {
   const data = await chrome.storage.local.get(["blockedSites"]);
   if (!siteList) return;
@@ -166,7 +141,6 @@ async function loadBlockedSites() {
   (data.blockedSites || []).forEach(addSiteToUI);
 }
 
-// Add custom site to blocked list
 function addCustomSite() {
   if (!siteInput) return;
 
@@ -184,7 +158,6 @@ function addCustomSite() {
   siteInput.value = "";
 }
 
-// Add site to UI list
 function addSiteToUI(site) {
   if (!siteList) return;
 
@@ -201,7 +174,6 @@ function addSiteToUI(site) {
   siteList.appendChild(li);
 }
 
-// Remove site from blocked list
 function removeSite(site, li) {
   chrome.storage.local.get(["blockedSites"], (data) => {
     const list = (data.blockedSites || []).filter((s) => s !== site);
@@ -210,7 +182,6 @@ function removeSite(site, li) {
   li.remove();
 }
 
-// Set redirect URL
 async function setRedirectUrl() {
   if (!redirectInput) return;
 
@@ -219,7 +190,6 @@ async function setRedirectUrl() {
   updateRedirectStatus();
 }
 
-// Toggle break time settings
 async function toggleBreakTime() {
   if (!breakToggle) return;
 
@@ -228,7 +198,6 @@ async function toggleBreakTime() {
   if (breakSettings) breakSettings.style.display = enabled ? "block" : "none";
 }
 
-// Toggle pause time settings
 async function togglePauseTime() {
   if (!pauseToggle) return;
 
@@ -237,7 +206,6 @@ async function togglePauseTime() {
   if (pauseSettings) pauseSettings.style.display = enabled ? "block" : "none";
 }
 
-// Toggle adult content blocking
 async function toggleAdultContent() {
   if (!adultToggle) return;
 
@@ -245,12 +213,8 @@ async function toggleAdultContent() {
   await chrome.storage.local.set({ adultEnabled: enabled });
   await chrome.runtime.sendMessage({ action: "updateRules" });
   if (adultSettings) adultSettings.style.display = enabled ? "block" : "none";
-  console.log(
-    "Adult content blocking is now " + (enabled ? "enabled" : "disabled"),
-  );
 }
 
-// Update break time values
 async function updateBreakTime() {
   if (!breakStartTime || !breakEndTime) return;
 
@@ -260,7 +224,6 @@ async function updateBreakTime() {
   });
 }
 
-// Update pause time values
 async function updatePauseTime() {
   if (!pauseStartTime || !pauseEndTime) return;
 
@@ -270,7 +233,6 @@ async function updatePauseTime() {
   });
 }
 
-// Toggle current site blocking
 async function toggleCurrentSite() {
   if (!siteToggle || !window.currentSite) return;
 
@@ -282,7 +244,6 @@ async function toggleCurrentSite() {
   await chrome.storage.local.set({ defaultSites });
 }
 
-// Update redirect status display
 function updateRedirectStatus() {
   chrome.storage.local.get(["redirectUrl"], (data) => {
     if (!currentRedirect) return;
@@ -296,32 +257,16 @@ function updateRedirectStatus() {
   });
 }
 
-// Load site-specific settings
 async function loadSiteSettings(site) {
   const data = await chrome.storage.local.get(["defaultSites", "siteOptions"]);
   const defaultSites = data.defaultSites || {};
   const siteOptions = data.siteOptions || {};
 
-  // Store site options globally (for translations)
-  window.siteOptions = siteOptions;
-
   if (siteToggle) {
     siteToggle.checked = defaultSites[site] !== false;
   }
-
-  // Update site-specific options UI (handled by popup.js)
-  if (window.updateSiteOptionsUI) {
-    window.updateSiteOptionsUI(site, siteOptions[site] || {});
-  }
 }
 
-// Export functions for use by popup.js
-window.settingsModule = {
-  init: initSettings,
-  loadSiteSettings: loadSiteSettings,
-};
-
-// Auto-initialize when DOM is ready
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initSettings);
 } else {
