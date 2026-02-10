@@ -11,7 +11,7 @@ window.currentSite = null;
 const SITE_DISPLAY_NAMES = {
   "facebook.com": "Facebook",
   "youtube.com": "YouTube",
-  "twitter.com": "Twitter",
+  "x.com": "X",
   "instagram.com": "Instagram",
 };
 
@@ -41,7 +41,7 @@ const SITE_OPTIONS_CONFIG = {
     { id: "hideReels", label: "Hide Reels" },
     { id: "removeColors", label: "Remove Colors" },
   ],
-  "twitter.com": [
+  "x.com": [
     { id: "blockTimeline", label: "Block Timeline" },
     { id: "hideAllMedia", label: "Hide All Media" },
     { id: "removeColors", label: "Remove Colors" },

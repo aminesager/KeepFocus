@@ -23,8 +23,8 @@ async function applyContentModifications() {
     applyYouTubeModifications(siteOptions["youtube.com"]);
   } else if (hostname.includes("instagram.com")) {
     applyInstagramModifications(siteOptions["instagram.com"]);
-  } else if (hostname.includes("twitter.com") || hostname.includes("x.com")) {
-    applyTwitterModifications(siteOptions["twitter.com"]);
+  } else if (hostname.includes("x.com") || hostname.includes("x.com")) {
+    applyXModifications(siteOptions["x.com"]);
   }
 }
 
@@ -283,8 +283,8 @@ function applyInstagramModifications(options) {
   currentStyles = style;
 }
 
-// Twitter modifications
-function applyTwitterModifications(options) {
+// X modifications
+function applyXModifications(options) {
   if (!options) return;
 
   const style = document.createElement("style");
