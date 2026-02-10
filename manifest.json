@@ -26,15 +26,15 @@
   ],
 
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "src/background/background.js"
   },
 
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "icons/icon16.png",
-      "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
+      "16": "src/assets/icons/icon16.png",
+      "48": "src/assets/icons/icon48.png",
+      "128": "src/assets/icons/icon128.png"
     }
   },
 
@@ -47,31 +47,31 @@
         "*://*.twitter.com/*",
         "*://*.x.com/*"
       ],
-      "js": ["content.js"],
+      "js": ["src/content/content.js"],
       "run_at": "document_idle",
       "all_frames": false
     }
   ],
 
   "icons": {
-    "128": "icons/icon128.png",
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png"
+    "128": "src/assets/icons/icon128.png",
+    "16": "src/assets/icons/icon16.png",
+    "48": "src/assets/icons/icon48.png"
   },
 
   "web_accessible_resources": [
     {
       "resources": [
-        "icons/flags/us.svg",
-        "icons/flags/es.svg",
-        "icons/flags/de.svg",
-        "icons/flags/fr.svg",
-        "icons/flags/it.svg",
-        "icons/flags/pt.svg",
-        "icons/flags/ru.svg",
-        "icons/flags/in.svg",
-        "icons/flags/zh.svg",
-        "icons/flags/ja.svg"
+        "src/assets/icons/flags/us.svg",
+        "src/assets/icons/flags/es.svg",
+        "src/assets/icons/flags/de.svg",
+        "src/assets/icons/flags/fr.svg",
+        "src/assets/icons/flags/it.svg",
+        "src/assets/icons/flags/pt.svg",
+        "src/assets/icons/flags/ru.svg",
+        "src/assets/icons/flags/in.svg",
+        "src/assets/icons/flags/zh.svg",
+        "src/assets/icons/flags/ja.svg"
       ],
       "matches": ["<all_urls>"]
     }

@@ -74,11 +74,3 @@ body.popup-loaded {
 .content-area::-webkit-scrollbar-thumb:hover {
   background-color: var(--scrollbar-thumb-hover);
 }
-
-/* Responsive adjustments */
-/* @media (max-width: 480px) {
-  body {
-    width: 100%;
-    min-width: 320px;
-  }
-} */
