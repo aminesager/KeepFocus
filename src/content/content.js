@@ -28,7 +28,6 @@ async function applyContentModifications() {
   }
 }
 
-// Facebook modifications
 function applyFacebookModifications(options) {
   if (!options) return;
 
@@ -39,35 +38,39 @@ function applyFacebookModifications(options) {
 
   if (options.hideFeed) {
     css += `
-      [role="feed"], 
-      [data-pagelet="Feed"],
+      /* Hide main feed and related feed containers */
+      div[role="feed"],
+      div[data-pagelet="Feed"],
       div[data-pagelet="MainFeed"],
-      .x1yztbdb.x1n2onr6.xh8yej3,
-      div[aria-label="News Feed"]
+      div[data-pagelet="ProfileTimeline"],
+      div[aria-label="News Feed"],
+      div[aria-label="Feed"],
+      div[data-visualcompletion="ignore-dynamic"] > div[role="feed"]
       { display: none !important; }
     `;
   }
 
   if (options.hideLikes) {
     css += `
-      [aria-label*="Like"],
-      [aria-label*="Reaction"],
-      [aria-label*="Comment"],
-      .x1i10hfl,
-      .x6s0dn4,
-      div[aria-label="Actions for this post"],
-      span[aria-label*="reactions"],
-      div[role="button"][aria-label*="Like"]
+      /* Hide reaction buttons and counts on posts */
+      div[role="article"] div[aria-label*="Like"][role="button"],
+      div[role="article"] div[aria-label*="Comment"][role="button"],
+      div[role="article"] div[aria-label*="Share"][role="button"],
+      div[role="article"] span[aria-label*="reactions"],
+      div[role="article"] span[aria-label*="Reactions"],
+      div[role="article"] ul[aria-label*="reaction"],
+      div[role="article"] div[aria-label="Actions for this post"]
       { display: none !important; }
     `;
   }
 
   if (options.hideChat) {
     css += `
-      [aria-label="Chat"],
-      [data-pagelet="Dock"],
-      .x1iyjqo2,
+      /* Hide chat dock and chat sidebar */
+      div[data-pagelet="Dock"],
       div[aria-label="Chats"],
+      div[aria-label="Chat"],
+      aside[aria-label*="Chat"],
       div[role="complementary"][aria-label*="Chat"]
       { display: none !important; }
     `;
@@ -75,20 +78,24 @@ function applyFacebookModifications(options) {
 
   if (options.hideStories) {
     css += `
-      [aria-label="Stories"],
-      .x1rg5ohu,
+      [data-pagelet="Stories"],
+      [data-pagelet="StoriesContainer"],
+      div[aria-label="Stories"],
       div[aria-label*="Stories"],
-      div[role="region"][aria-label*="Stories"]
+      [role="region"][aria-label*="Stories"],
+      [role="region"][aria-label*="stories"]
       { display: none !important; }
     `;
   }
 
   if (options.hideReels) {
     css += `
-      [aria-label="Reels"],
-      [href*="/reel/"],
-      .x1qjc9v5,
+      /* Hide Reels sections and links */
+      div[data-pagelet*="Reels"],
+      div[aria-label="Reels"],
       div[aria-label*="Reels"],
+      div[role="region"][aria-label*="Reels"],
+      a[href*="/reel/"],
       a[href*="/reels/"]
       { display: none !important; }
     `;
@@ -96,9 +103,8 @@ function applyFacebookModifications(options) {
 
   if (options.removeColors) {
     css += `
-      * {
-        filter: grayscale(100%) !important;
-      }
+      html
+      { filter: grayscale(100%) !important; }
     `;
   }
 
