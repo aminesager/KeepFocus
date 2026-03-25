@@ -1,15 +1,9 @@
-console.log(translations);
-
 function getPreferredLanguage() {
   const savedLang = localStorage.getItem("keepfocus_language");
-  if (savedLang && translations[savedLang]) {
-    return savedLang;
-  }
+  if (savedLang && translations[savedLang]) return savedLang;
 
   const browserLang = navigator.language.split("-")[1];
-  if (translations[browserLang]) {
-    return browserLang;
-  }
+  if (translations[browserLang]) return browserLang;
 
   return "en";
 }
@@ -29,6 +23,19 @@ function getTranslatedSiteOption(optionId) {
   return optionId
     .replace(/([A-Z])/g, " $1")
     .replace(/^./, (str) => str.toUpperCase());
+}
+
+function updateCurrentSiteName(siteKey) {
+  const currentSiteName = document.getElementById("currentSiteName");
+  if (!currentSiteName) return;
+
+  currentSiteName.setAttribute("data-translation", siteKey);
+  const lang = getPreferredLanguage();
+  const t = translations[lang] || translations.en;
+
+  if (t.siteSettings && t.siteSettings[siteKey]) {
+    currentSiteName.textContent = t.siteSettings[siteKey];
+  }
 }
 
 async function applyTranslations(language = null) {
@@ -79,35 +86,10 @@ async function applyTranslations(language = null) {
     darkModeIcon.alt = t.header.themeToggle;
   }
 
-  if (typeof Event !== "undefined") {
-    const event = new CustomEvent("languageChanged", {
-      detail: { language: lang },
-    });
-    document.dispatchEvent(event);
-  }
-
-  if (window.currentSite && typeof window.updateSiteOptionsUI === "function") {
-    setTimeout(() => {
-      const data = window.siteOptions || {};
-      window.updateSiteOptionsUI(
-        window.currentSite,
-        data[window.currentSite] || {},
-      );
-    }, 50);
-  }
-}
-
-function updateCurrentSiteName(siteKey) {
-  const currentSiteName = document.getElementById("currentSiteName");
-  if (currentSiteName) {
-    currentSiteName.setAttribute("data-translation", siteKey);
-    const lang = getPreferredLanguage();
-    const t = translations[lang] || translations.en;
-
-    if (t.siteSettings && t.siteSettings[siteKey]) {
-      currentSiteName.textContent = t.siteSettings[siteKey];
-    }
-  }
+  const event = new CustomEvent("languageChanged", {
+    detail: { language: lang },
+  });
+  document.dispatchEvent(event);
 }
 
 window.applyTranslations = applyTranslations;

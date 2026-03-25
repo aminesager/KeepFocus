@@ -54,26 +54,28 @@ async function initNavigation() {
 
   await setupNavigation();
 
-  if (savedNav === "settings") {
-    if (settingsNav) settingsNav.classList.add("active");
-    if (siteSettings) siteSettings.style.display = "none";
-    if (generalSettings) generalSettings.style.display = "block";
-  } else {
-    const savedNavItem = document.querySelector(
-      `.nav-item[data-site="${savedNav}"]:not(.settings-nav)`,
-    );
-    if (savedNavItem) {
-      document.querySelectorAll(".nav-item").forEach((nav) => {
-        nav.classList.remove("active");
-      });
-      savedNavItem.classList.add("active");
-      window.currentSite = savedNav;
-      updateCurrentSiteDisplay();
-      await loadSiteSettings(savedNav);
-      if (siteSettings) siteSettings.style.display = "block";
-      if (generalSettings) generalSettings.style.display = "none";
+  setTimeout(async () => {
+    if (savedNav === "settings") {
+      if (settingsNav) settingsNav.classList.add("active");
+      if (siteSettings) siteSettings.style.display = "none";
+      if (generalSettings) generalSettings.style.display = "block";
+    } else {
+      const savedNavItem = document.querySelector(
+        `.nav-item[data-site="${savedNav}"]:not(.settings-nav)`,
+      );
+      if (savedNavItem) {
+        document.querySelectorAll(".nav-item").forEach((nav) => {
+          nav.classList.remove("active");
+        });
+        savedNavItem.classList.add("active");
+        window.currentSite = savedNav;
+        updateCurrentSiteDisplay();
+        await loadSiteSettings(savedNav);
+        if (siteSettings) siteSettings.style.display = "block";
+        if (generalSettings) generalSettings.style.display = "none";
+      }
     }
-  }
+  }, 50);
 }
 
 async function setupNavigation() {
@@ -94,6 +96,10 @@ async function setupNavigation() {
       generalSettings.style.display = "none";
       window.currentSite = item.getAttribute("data-site");
       updateCurrentSiteDisplay();
+      const siteKey = window.currentSite.split(".")[0];
+      if (typeof updateCurrentSiteName === "function") {
+        updateCurrentSiteName(siteKey);
+      }
       await chrome.storage.local.set({
         selectedNav: window.currentSite,
       });
@@ -144,6 +150,8 @@ async function loadSiteSettings(site) {
   const defaultSites = data.defaultSites || {};
   const siteOptions = data.siteOptions || {};
 
+  window.siteOptions = siteOptions;
+
   const siteToggle = document.getElementById("siteToggle");
   if (siteToggle) {
     siteToggle.checked = defaultSites[site] !== false;
@@ -162,8 +170,17 @@ function updateSiteOptionsUI(site, options) {
   config.forEach((optionConfig) => {
     const div = document.createElement("div");
     div.className = "option-item";
+
+    let label = optionConfig.label;
+    if (typeof getTranslatedSiteOption === "function") {
+      const translatedLabel = getTranslatedSiteOption(optionConfig.id);
+      if (translatedLabel) {
+        label = translatedLabel;
+      }
+    }
+
     div.innerHTML = `
-      <span class="option-label">${optionConfig.label}</span>
+      <span class="option-label">${label}</span>
       <label class="switch">
         <input type="checkbox" class="site-option" data-option="${
           optionConfig.id
@@ -191,7 +208,21 @@ async function updateSiteOptions() {
 
   siteOptions[window.currentSite] = options;
   await chrome.storage.local.set({ siteOptions });
+  window.siteOptions = siteOptions;
 }
+
+function handleLanguageChange(e) {
+  if (e.detail && e.detail.language) {
+    if (window.currentSite) {
+      loadSiteSettings(window.currentSite);
+    }
+  }
+}
+
+window.navigationModule = {
+  init: initNavigation,
+  handleLanguageChange: handleLanguageChange,
+};
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initNavigation);

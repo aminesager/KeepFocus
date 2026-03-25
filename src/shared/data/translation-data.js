@@ -873,4 +873,62 @@ window.translations = {
       hideAllMedia: "Απόκρυψη όλων των πολυμέσων",
     },
   },
+  nl: {
+    header: {
+      title: "KeepFocus",
+      themeToggle: "Thema wisselen",
+    },
+    nav: {
+      facebook: "Facebook",
+      youtube: "YouTube",
+      x: "X",
+      instagram: "Instagram",
+      settings: "Instellingen",
+    },
+    siteSettings: {
+      facebook: "Facebook",
+      youtube: "YouTube",
+      x: "X",
+      instagram: "Instagram",
+      blockSite: "Deze site blokkeren",
+    },
+    generalSettings: {
+      redirectSettings: "Doorverwijsinstellingen",
+      customWebsites: "Aangepaste websites",
+      breakTime: "Pauzetijd",
+      pauseTime: "Pauzeren",
+    },
+    placeholders: {
+      redirectInput: "https://example.com",
+      siteInput: "example.com",
+    },
+    buttons: {
+      setRedirect: "Instellen",
+      addWebsite: "Toevoegen",
+    },
+    toggleLabels: {
+      enableBreak: "Pauzetijd inschakelen",
+      enablePause: "Pauzeren inschakelen",
+      enableBlock: "Blokkeren van volwassen inhoud inschakelen",
+    },
+    statusText: {
+      currentRedirect: "Geen doorverwijs-URL ingesteld",
+    },
+    siteOptions: {
+      hideFeed: "Feed verbergen",
+      hideLikes: "Likes en reacties verbergen",
+      hideChat: "Chatbalk verbergen",
+      hideStories: "Stories verbergen",
+      hideReels: "Reels verbergen",
+      removeColors: "Kleuren verwijderen",
+      hideRecommendations: "Aanbevelingen verbergen",
+      redirectToSubs: "Geforceerd doorverwijzen naar abonnementen",
+      hideNews: "Nieuws verbergen",
+      hideSidebar: "Zijbalk verbergen",
+      hideComments: "Reacties verbergen",
+      hideShorts: "Shorts verbergen",
+      blockTimeline: "Tijdlijn blokkeren",
+      hideAllMedia: "Alle media verbergen",
+    },
+  },
 };
