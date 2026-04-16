@@ -326,7 +326,7 @@ function applyInstagramModifications(options) {
   if (options.removeColors) {
     css += `
       * {
-        filter: grayscale(100%) !important;
+        filter: saturate(0%) !important;
       }
     `;
   }
@@ -337,6 +337,10 @@ function applyInstagramModifications(options) {
   style.textContent = css;
   document.head.appendChild(style);
   currentStyles = style;
+
+  if (options.hideReels && window.location.pathname.includes("/reels")) {
+    window.location.href = "https://www.instagram.com/";
+  }
 }
 
 //***********************************************************************************************************************************
