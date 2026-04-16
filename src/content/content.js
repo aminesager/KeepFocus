@@ -291,7 +291,7 @@ function applyInstagramModifications(options) {
 
   if (options.hideStories) {
     css += `
-    main > div > div:first-child > div:first-child > .xfk6m8 {
+    .x1qjc9v5.x1q0g3np.x5yr21d.xw2csxc.x10wlt62.x1n2onr6.x1rohswg.x78zum5.x1y1aw1k.xrw5ot4.xwib8y2.x7coems.xfk6m8, ._afxw._al46._aahm._akl_._aul3._al47{
       display: none !important;
     }
   `;
