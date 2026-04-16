@@ -286,6 +286,16 @@ function applyInstagramModifications(options) {
   `;
   }
 
+  // THIS IS A PLANNED FEATURE IN THE FUTURE, REQUIRED TOGGLE CREATION AND WIRING ACROSS ALL FILES + TRANSLATION
+  //   if (options.hideChatSection) {
+  //     css += `
+  //     .x1i10hfl.x9f619.x1ypdohk.xdl72j9.x2lah0s.x3ct3a4.xdj266r.x14z9mp.xat24cr.x1lziwak.x2lwn1j.xeuugli.xexx8yu.x18d9i69.x16tdsg8.x1hl2dhg.xggy1nq.x1ja2u2z.x1t137rt.x1q0g3np.x87ps6o.x1lku1pv.x1a2a7pz.x6s0dn4.x7r02ix.x1ss9elp.x11ppq56.xvhwddo.x1o29io0.x13fuv20.x18b5jzi.x1q0q8m5.x1t7ytsu.x1w60jca.x3nfvp2.xl56j7k.x1n2onr6.x6zsckl.x10qfohq.xdwr3uu.xly64p6.x178xt8z.x1lun4ml.xso031l.xpilrb4.xnnlda6.xv54qhq.xf7dkkf.x1ddxa5k.xysibl7.x4yb96v.x1kylhsf.xed3198
+  //  {
+  //       display: none !important;
+  //     }
+  //   `;
+  //   }
+
   //***********************************************************************************************************************************
   //***********************************************************************************************************************************
 
