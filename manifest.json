@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "KeepFocus",
-  "version": "1.2",
+  "version": "1.0.0-rc1",
   "description": "Advanced website blocker with content filtering and scheduling",
 
   "permissions": [

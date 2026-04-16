@@ -341,6 +341,9 @@ function applyInstagramModifications(options) {
   if (options.hideReels && window.location.pathname.includes("/reels")) {
     window.location.href = "https://www.instagram.com/";
   }
+  if (options.hideStories && window.location.pathname.includes("/stories")) {
+    window.location.href = "https://www.instagram.com/";
+  }
 }
 
 //***********************************************************************************************************************************
